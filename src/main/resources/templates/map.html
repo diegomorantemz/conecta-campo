@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Mapa de Agricultores')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Mapa de Agricultores</h1>
+    <p class="text-center text-muted mb-4">Encuentra agricultores cerca de ti en la región Piura</p>
+
+    <div id="map" style="height: 500px; border-radius: 10px;"></div>
+
+    <div class="alert alert-info mt-3">
+        <i class="fas fa-info-circle"></i> Los marcadores muestran ubicaciones de agricultores en Chulucanas, Tambogrande y distritos cercanos.
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    var map = L.map('map').setView([-5.194, -80.632], 9);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Marcadores con más productos
+    var markers = [
+        // Chulucanas
+        { lat: -5.0925, lng: -80.1625, name: "Finca El Mango", products: "Mango Criollo, Plátano", district: "Chulucanas" },
+        { lat: -5.0950, lng: -80.1650, name: "Finca La Esperanza", products: "Mango Kent", district: "Chulucanas" },
+
+        // Tambogrande
+        { lat: -4.9244, lng: -80.3414, name: "Finca Los Limones", products: "Limón Sutil, Maíz", district: "Tambogrande" },
+        { lat: -4.9300, lng: -80.3450, name: "Finca El Valle", products: "Mango Kent", district: "Tambogrande" },
+
+        // Morropón
+        { lat: -5.2000, lng: -80.4000, name: "Asociación Cacaotera", products: "Cacao Fino, Limón", district: "Morropón" },
+        { lat: -5.2100, lng: -80.4100, name: "Cafetal San Ignacio", products: "Café de Altura", district: "Morropón" },
+
+        // Huancabamba (Sierra)
+        { lat: -5.2400, lng: -79.4500, name: "Comunidad Huancabamba", products: "Café Orgánico, Cacao", district: "Huancabamba" },
+
+        // Ayabaca (Sierra)
+        { lat: -4.6500, lng: -79.7200, name: "Finca La Panela", products: "Caña de Azúcar, Café", district: "Ayabaca" },
+
+        // Valle del Chira (Sullana)
+        { lat: -4.9000, lng: -80.6833, name: "Cooperativa Chira", products: "Arroz, Plátano", district: "Sullana" },
+
+        // Sechura
+        { lat: -5.5600, lng: -80.8200, name: "Finca El Arenal", products: "Maíz, Frijol", district: "Sechura" }
+    ];
+
+    markers.forEach(function(marker) {
+        var popupContent = `
+            <div class="text-center">
+                <strong>${marker.name}</strong><br>
+                <span class="text-success">📦 ${marker.products}</span><br>
+                📍 ${marker.district}<br>
+                <a href="/harvests" class="btn btn-sm btn-success mt-2">Ver cosechas</a>
+            </div>
+        `;
+
+        L.marker([marker.lat, marker.lng])
+            .bindPopup(popupContent)
+            .addTo(map);
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

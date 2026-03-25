@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Cosechas Disponibles')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Cosechas Disponibles</h1>
+    <p class="text-center text-muted mb-4">Productos frescos directamente de nuestros agricultores</p>
+
+    <!-- Filtros -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <select class="form-select">
+                <option>Todos los productos</option>
+                <option>Mango</option>
+                <option>Limón</option>
+                <option>Plátano</option>
+                <option>Maíz</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select">
+                <option>Todos los distritos</option>
+                <option>Chulucanas</option>
+                <option>Tambogrande</option>
+                <option>Morropón</option>
+                <option>Piura</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-success w-100">Buscar</button>
+        </div>
+    </div>
+
+    <!-- Listado de cosechas (versión extendida) -->
+    <div class="row">
+        <!-- Mango Criollo - Chulucanas -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <span class="badge bg-success mb-2">Producto Estrella</span>
+                    <h5 class="card-title">Mango Criollo</h5>
+                    <p class="card-text">Agricultor: Juan Pérez - Chulucanas</p>
+                    <p class="card-text">Cantidad: 500 kg</p>
+                    <p class="fw-bold text-success">Precio: S/ 1.50/kg</p>
+                    <p class="small text-muted">Cosecha: Abril 2026</p>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        Contactar agricultor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mango Kent - Tambogrande -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <span class="badge bg-success mb-2">Producto Estrella</span>
+                    <h5 class="card-title">Mango Kent</h5>
+                    <p class="card-text">Agricultor: Carlos López - Tambogrande</p>
+                    <p class="card-text">Cantidad: 800 kg</p>
+                    <p class="fw-bold text-success">Precio: S/ 2.20/kg</p>
+                    <p class="small text-muted">Cosecha: Abril 2026</p>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        Contactar agricultor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Limón Sutil - Tambogrande -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <span class="badge bg-success mb-2">Producto Estrella</span>
+                    <h5 class="card-title">Limón Sutil</h5>
+                    <p class="card-text">Agricultor: María Rodríguez - Tambogrande</p>
+                    <p class="card-text">Cantidad: 300 kg</p>
+                    <p class="fw-bold text-success">Precio: S/ 2.00/kg</p>
+                    <p class="small text-muted">Cosecha: Todo el año</p>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        Contactar agricultor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plátano de Seda - Chulucanas -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <span class="badge bg-success mb-2">Producto Estrella</span>
+                    <h5 class="card-title">Plátano de Seda</h5>
+                    <p class="card-text">Agricultor: Ana Sánchez - Chulucanas</p>
+                    <p class="card-text">Cantidad: 200 kg</p>
+                    <p class="fw-bold text-success">Precio: S/ 2.50/kg</p>
+                    <p class="small text-muted">Cosecha: Todo el año</p>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        Contactar agricultor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Café - Huancabamba (Producto Especial) -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-warning">
+                <div class="card-body">
+                    <span class="badge bg-warning text-dark mb-2">✨ Producto Especial</span>
+                    <h5 class="card-title">Café de Altura</h5>
+                    <p class="card-text">Agricultor: Comunidad Huancabamba</p>
+                    <p class="card-text">Cantidad: 150 kg</p>
+                    <p class="fw-bold text-success">Precio: S/ 6.50/kg</p>
+                    <p class="small text-muted">Cosecha: Mayo - Agosto</p>
+                    <p class="small text-muted">Comercio justo - Cultivo en sierra</p>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        Contactar agricultor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cacao - Morropón (Producto Especial) -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-warning">
+                <div class="card-body">
+                    <span class="badge bg-warning text-dark mb-2">✨ Producto Especial</span>
+                    <h5 class="card-title">Cacao Fino de Aroma</h5>
+                    <p class="card-text">Agricultor: Asociación Morropón</p>
+                    <p class="card-text">Cantidad: 80 kg</p>
+                    <p class="fw-bold text-success">Precio: S/ 10.00/kg</p>
+                    <p class="small text-muted">Cosecha: Julio 2026</p>
+                    <p class="small text-muted">Cacao blanco - Sabor frutado</p>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        Contactar agricultor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Caña de Azúcar - Ayabaca (Producto Especial) -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-warning">
+                <div class="card-body">
+                    <span class="badge bg-warning text-dark mb-2">✨ Producto Especial</span>
+                    <h5 class="card-title">Caña de Azúcar</h5>
+                    <p class="card-text">Agricultor: Don José - Ayabaca</p>
+                    <p class="card-text">Cantidad: 500 kg</p>
+                    <p class="fw-bold text-success">Precio: S/ 1.20/kg</p>
+                    <p class="small text-muted">Cosecha: Todo el año</p>
+                    <p class="small text-muted">Para panela artesanal</p>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        Contactar agricultor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arroz - Valle del Chira -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <span class="badge bg-info mb-2">Granos Básicos</span>
+                    <h5 class="card-title">Arroz en Cáscara</h5>
+                    <p class="card-text">Agricultor: Cooperativa Chira - Sullana</p>
+                    <p class="card-text">Cantidad: 1000 kg</p>
+                    <p class="fw-bold text-success">Precio: S/ 1.80/kg</p>
+                    <p class="small text-muted">Cosecha: Abril 2026</p>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        Contactar agricultor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Maíz - Tambogrande -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <span class="badge bg-info mb-2">Granos Básicos</span>
+                    <h5 class="card-title">Maíz Amarillo</h5>
+                    <p class="card-text">Agricultor: Pedro Flores - Tambogrande</p>
+                    <p class="card-text">Cantidad: 400 kg</p>
+                    <p class="fw-bold text-success">Precio: S/ 2.00/kg</p>
+                    <p class="small text-muted">Cosecha: Abril 2026</p>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        Contactar agricultor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cebolla - Valle del Chira -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <span class="badge bg-info mb-2">Hortalizas</span>
+                    <h5 class="card-title">Cebolla Roja</h5>
+                    <p class="card-text">Agricultor: Rosa Castillo - Marcavelica</p>
+                    <p class="card-text">Cantidad: 300 kg</p>
+                    <p class="fw-bold text-success">Precio: S/ 2.00/kg</p>
+                    <p class="small text-muted">Cosecha: Agosto 2026</p>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        Contactar agricultor
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de contacto -->
+<div class="modal fade" id="contactModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Contactar Agricultor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Tu nombre</label>
+                        <input type="text" class="form-control" placeholder="Ingresa tu nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Teléfono / WhatsApp</label>
+                        <input type="tel" class="form-control" placeholder="Ej: 987654321">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mensaje</label>
+                        <textarea class="form-control" rows="3" placeholder="¿Cuántos kilos deseas comprar?"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Enviar mensaje</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

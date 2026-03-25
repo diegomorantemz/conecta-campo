@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Inicio')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Hero Section -->
+<div class="bg-success text-white py-5">
+    <div class="container text-center py-5">
+        <h1 class="display-4">ConectaCampo</h1>
+        <p class="lead">Apoyamos a los pequeños agricultores de Piura</p>
+        <p>Eliminamos intermediarios, garantizamos precios justos</p>
+        <div class="mt-4">
+            <a th:href="@{/register}" class="btn btn-light btn-lg me-2">Soy Agricultor</a>
+            <a th:href="@{/register}" class="btn btn-outline-light btn-lg">Quiero Comprar</a>
+        </div>
+    </div>
+</div>
+
+<!-- Beneficios -->
+<div class="container py-5">
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <i class="fas fa-hand-holding-usd fa-3x text-success mb-3"></i>
+            <h3>Precios Justos</h3>
+            <p>Recomendamos precios basados en datos reales del mercado local</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <i class="fas fa-tractor fa-3x text-success mb-3"></i>
+            <h3>Sin Intermediarios</h3>
+            <p>Conexión directa entre agricultor y comprador</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <i class="fas fa-map-marked-alt fa-3x text-success mb-3"></i>
+            <h3>Mapa Interactivo</h3>
+            <p>Encuentra agricultores cerca de tu ubicación</p>
+        </div>
+    </div>
+</div>
+
+<!-- Productos en Temporada -->
+<div class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Productos en Temporada</h2>
+        <div class="row">
+            <!-- Mango Criollo -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <span class="badge bg-success mb-2">Producto Estrella</span>
+                        <h5 class="card-title">Mango Criollo</h5>
+                        <p class="card-text">Temporada: Marzo - Mayo</p>
+                        <p class="fw-bold text-success">S/ 1.20 - S/ 1.80/kg</p>
+                        <span class="badge bg-secondary">Chulucanas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Limón Sutil -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <span class="badge bg-success mb-2">Producto Estrella</span>
+                        <h5 class="card-title">Limón Sutil</h5>
+                        <p class="card-text">Temporada: Todo el año</p>
+                        <p class="fw-bold text-success">S/ 1.50 - S/ 2.50/kg</p>
+                        <span class="badge bg-secondary">Tambogrande</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Café de Altura -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card h-100 border-warning">
+                    <div class="card-body">
+                        <span class="badge bg-warning text-dark mb-2">✨ Especial</span>
+                        <h5 class="card-title">Café de Altura</h5>
+                        <p class="card-text">Temporada: Marzo - Agosto</p>
+                        <p class="fw-bold text-success">S/ 6.00 - S/ 8.00/kg</p>
+                        <span class="badge bg-secondary">Huancabamba</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cacao Fino -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card h-100 border-warning">
+                    <div class="card-body">
+                        <span class="badge bg-warning text-dark mb-2">✨ Especial</span>
+                        <h5 class="card-title">Cacao Fino</h5>
+                        <p class="card-text">Temporada: Mayo - Octubre</p>
+                        <p class="fw-bold text-success">S/ 8.00 - S/ 12.00/kg</p>
+                        <span class="badge bg-secondary">Morropón</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a th:href="@{/harvests}" class="btn btn-success px-4">
+                Ver todas las cosechas <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

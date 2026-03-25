@@ -1,0 +1,77 @@
+<footer th:fragment="footer" class="bg-dark text-white mt-5 pt-4 pb-3">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">
+                    <i class="fas fa-leaf text-success me-2"></i>ConectaCampo
+                </h5>
+                <p class="text-white-50 small">
+                    Plataforma que conecta directamente a pequeños agricultores de Piura con compradores locales, eliminando intermediarios y garantizando precios justos.
+                </p>
+                <div class="mt-3">
+                    <a href="#" class="text-white-50 me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white-50 me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white-50 me-3"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="text-white-50"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">Enlaces Rápidos</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a th:href="@{/}" class="text-white-50 text-decoration-none">Inicio</a></li>
+                    <li class="mb-2"><a th:href="@{/map}" class="text-white-50 text-decoration-none">Mapa de Agricultores</a></li>
+                    <li class="mb-2"><a th:href="@{/harvests}" class="text-white-50 text-decoration-none">Cosechas Disponibles</a></li>
+                    <li class="mb-2"><a th:href="@{/how-it-works}" class="text-white-50 text-decoration-none">Cómo funciona</a></li>
+                    <li class="mb-2"><a th:href="@{/contact}" class="text-white-50 text-decoration-none">Contacto</a></li>
+                </ul>
+            </div>
+
+
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">Contacto</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-map-marker-alt text-success me-2"></i>
+                        <span class="text-white-50">Piura, Perú</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-envelope text-success me-2"></i>
+                        <a href="mailto:info@conectacampo.pe" class="text-white-50 text-decoration-none">info@conectacampo.pe</a>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-phone text-success me-2"></i>
+                        <a href="tel:+51987654321" class="text-white-50 text-decoration-none">+51 964 247 753</a>
+                    </li>
+                </ul>
+                <div class="mt-3">
+                    <p class="small text-white-50 mb-0">
+                        <i class="fas fa-clock me-1"></i> Atención: Lun - Vie, 8am - 6pm
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="bg-white-50">
+
+
+        <div class="row">
+            <div class="col text-center">
+                <p class="small text-white-50 mb-0">
+                    &copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> ConectaCampo.
+                    Todos los derechos reservados.
+                </p>
+                <p class="small text-white-50 mt-1">
+                    <i class="fas fa-heart text-danger"></i> Apoyando a los pequeños agricultores de la región
+                </p>
+                <p class="small text-white-50 mt-1">
+                    Desarrollado por <span class="text-success fw-bold">MNTWARE</span>
+                    <i class="fas fa-certificate text-success ms-1"></i>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+

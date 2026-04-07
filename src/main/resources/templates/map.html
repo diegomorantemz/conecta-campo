@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head('Mapa de Agricultores')"></head>
+<head th:replace="fragments/head :: head('Mapa Agropecuario')"></head>
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="container mt-4">
-    <h1 class="text-center mb-4">Mapa de Agricultores</h1>
-    <p class="text-center text-muted mb-4">Encuentra agricultores cerca de ti en la región Piura</p>
+    <h1 class="text-center mb-2">Mapa Agropecuario</h1>
+    <p class="text-center text-muted mb-4">Encuentra agricultores y ferias cerca de ti</p>
 
-    <div id="map" style="height: 500px; border-radius: 10px;"></div>
+    <!-- Leyenda de colores -->
+    <div class="d-flex justify-content-center gap-4 mb-3 flex-wrap">
+        <div><i class="fas fa-map-marker-alt text-success"></i> <span class="small">Agricultor (finca fija)</span></div>
+        <div><i class="fas fa-map-marker-alt text-warning"></i> <span class="small">Feria local (evento temporal)</span></div>
+    </div>
 
-    <div class="alert alert-info mt-3">
-        <i class="fas fa-info-circle"></i> Los marcadores muestran ubicaciones de agricultores en Chulucanas, Tambogrande y distritos cercanos.
+    <div id="map" style="height: 550px; border-radius: 10px;"></div>
+
+    <div class="alert alert-info mt-3 small">
+        <i class="fas fa-info-circle"></i>
+        <strong>Agricultores:</strong> puntos de venta permanentes |
+        <strong>Ferias:</strong> eventos en fechas específicas (haz clic para más info)
     </div>
 </div>
 
@@ -19,54 +27,71 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+    // Inicializar mapa
     var map = L.map('map').setView([-5.194, -80.632], 9);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Marcadores con más productos
-    var markers = [
-        // Chulucanas
-        { lat: -5.0925, lng: -80.1625, name: "Finca El Mango", products: "Mango Criollo, Plátano", district: "Chulucanas" },
-        { lat: -5.0950, lng: -80.1650, name: "Finca La Esperanza", products: "Mango Kent", district: "Chulucanas" },
-
-        // Tambogrande
-        { lat: -4.9244, lng: -80.3414, name: "Finca Los Limones", products: "Limón Sutil, Maíz", district: "Tambogrande" },
-        { lat: -4.9300, lng: -80.3450, name: "Finca El Valle", products: "Mango Kent", district: "Tambogrande" },
-
-        // Morropón
-        { lat: -5.2000, lng: -80.4000, name: "Asociación Cacaotera", products: "Cacao Fino, Limón", district: "Morropón" },
-        { lat: -5.2100, lng: -80.4100, name: "Cafetal San Ignacio", products: "Café de Altura", district: "Morropón" },
-
-        // Huancabamba (Sierra)
-        { lat: -5.2400, lng: -79.4500, name: "Comunidad Huancabamba", products: "Café Orgánico, Cacao", district: "Huancabamba" },
-
-        // Ayabaca (Sierra)
-        { lat: -4.6500, lng: -79.7200, name: "Finca La Panela", products: "Caña de Azúcar, Café", district: "Ayabaca" },
-
-        // Valle del Chira (Sullana)
-        { lat: -4.9000, lng: -80.6833, name: "Cooperativa Chira", products: "Arroz, Plátano", district: "Sullana" },
-
-        // Sechura
-        { lat: -5.5600, lng: -80.8200, name: "Finca El Arenal", products: "Maíz, Frijol", district: "Sechura" }
+    // ========== AGRICULTORES (verde) ==========
+    var farmers = [
+        { lat: -5.0925, lng: -80.1625, name: "Finca El Mango", products: "Mango, Plátano", district: "Chulucanas", type: "farmer" },
+        { lat: -4.9244, lng: -80.3414, name: "Finca Los Limones", products: "Limón, Maíz", district: "Tambogrande", type: "farmer" },
+        { lat: -5.2000, lng: -80.4000, name: "Asociación Cacaotera", products: "Cacao, Café", district: "Morropón", type: "farmer" }
     ];
 
-    markers.forEach(function(marker) {
+    // ========== FERIAS (naranja) ==========
+    var fairs = [
+        { lat: -5.0900, lng: -80.1600, name: "Feria de Chulucanas", date: "25 de mayo, 8am-2pm", place: "Plaza Principal", type: "fair" },
+        { lat: -4.9200, lng: -80.3400, name: "Feria de Tambogrande", date: "26 de mayo, 9am-3pm", place: "Mercado Central", type: "fair" }
+    ];
+
+    // Icono personalizado para agricultores
+    var farmerIcon = L.divIcon({
+        html: '<i class="fas fa-map-marker-alt fa-2x text-success"></i>',
+        iconSize: [25, 25],
+        className: 'custom-div-icon'
+    });
+
+    // Icono personalizado para ferias
+    var fairIcon = L.divIcon({
+        html: '<i class="fas fa-map-marker-alt fa-2x text-warning"></i>',
+        iconSize: [25, 25],
+        className: 'custom-div-icon'
+    });
+
+    // Agregar agricultores al mapa
+    farmers.forEach(function(farmer) {
         var popupContent = `
-            <div class="text-center">
-                <strong>${marker.name}</strong><br>
-                <span class="text-success">📦 ${marker.products}</span><br>
-                📍 ${marker.district}<br>
+            <div style="min-width: 180px;">
+                <strong class="text-success">🌾 ${farmer.name}</strong><br>
+                <i class="fas fa-apple-alt"></i> ${farmer.products}<br>
+                <i class="fas fa-map-marker-alt"></i> ${farmer.district}<br>
                 <a href="/harvests" class="btn btn-sm btn-success mt-2">Ver cosechas</a>
             </div>
         `;
+        L.marker([farmer.lat, farmer.lng], { icon: farmerIcon })
+            .bindPopup(popupContent)
+            .addTo(map);
+    });
 
-        L.marker([marker.lat, marker.lng])
+    // Agregar ferias al mapa
+    fairs.forEach(function(fair) {
+        var popupContent = `
+            <div style="min-width: 180px;">
+                <strong class="text-warning">📅 ${fair.name}</strong><br>
+                <i class="fas fa-calendar-alt"></i> ${fair.date}<br>
+                <i class="fas fa-map-marker-alt"></i> ${fair.place}<br>
+                <a href="/fair/1" class="btn btn-sm btn-warning mt-2">Ver detalles</a>
+            </div>
+        `;
+        L.marker([fair.lat, fair.lng], { icon: fairIcon })
             .bindPopup(popupContent)
             .addTo(map);
     });
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

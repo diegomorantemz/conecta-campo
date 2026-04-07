@@ -133,3 +133,158 @@ footer a:hover {
         padding-right: 16px;
     }
 }
+
+/* Íconos personalizados para el mapa */
+.custom-div-icon {
+    background: transparent;
+    border: none;
+}
+
+.fa-map-marker-alt {
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+}
+
+/* Animación de iconos en navbar */
+.nav-link i {
+    transition: transform 0.2s ease;
+}
+
+.nav-link:hover i {
+    transform: scale(1.1);
+}
+
+/* Icono del logo */
+.navbar-brand i {
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover i {
+    transform: rotate(15deg);
+}
+
+/* Estilo para iconos con círculo de fondo */
+.bg-opacity-10 {
+    background-color: rgba(44, 94, 46, 0.1);
+}
+
+.bg-warning.bg-opacity-10 {
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+.hover-shadow {
+    transition: all 0.3s ease;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.1) !important;
+}
+
+/* Hero Section - Versión responsive mejorada */
+.hero-section {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    background-color: #1a4d1c; /* Color de respaldo mientras carga */
+}
+
+/* Imagen de fondo optimizada por dispositivo */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/images/img-portada2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+/* Capa oscura para que se lea el texto */
+.hero-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1;
+}
+
+/* Contenido por encima de todo */
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+/* Textos */
+.hero-section h1,
+.hero-section p {
+    color: white;
+}
+
+.hero-section h1 {
+    font-size: 2.5rem;
+}
+
+.hero-section .lead {
+    font-size: 1.1rem;
+}
+
+/* Ajustes para móvil */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 70vh;
+        text-align: center;
+    }
+
+    .hero-section h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-section .lead {
+        font-size: 0.95rem;
+    }
+
+    .hero-section .btn {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+
+    /* Para móvil, centramos la imagen en la parte más importante */
+    .hero-section::before {
+        background-position: 60% center;
+    }
+}
+
+/* Ajustes para tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-section {
+        min-height: 60vh;
+    }
+
+    .hero-section h1 {
+        font-size: 2.2rem;
+    }
+}
+
+/* Ajustes para desktop */
+@media (min-width: 1025px) {
+    .hero-section {
+        min-height: 85vh;
+    }
+
+    .hero-section h1 {
+        font-size: 3rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1.25rem;
+    }
+}

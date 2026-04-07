@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Detalle de Feria')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}" class="text-success">Inicio</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/fairs}" class="text-success">Ferias</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detalle</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Información principal -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h1 class="card-title text-success">Feria de Chulucanas</h1>
+                        <span class="badge bg-success fs-6 px-3 py-2">Próxima</span>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><i class="fas fa-calendar-alt text-success me-2"></i> <strong>Fecha:</strong> Sábado 25 de mayo, 2026</p>
+                            <p><i class="fas fa-clock text-success me-2"></i> <strong>Horario:</strong> 8:00 am - 2:00 pm</p>
+                            <p><i class="fas fa-map-marker-alt text-success me-2"></i> <strong>Lugar:</strong> Plaza Principal de Chulucanas</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><i class="fas fa-tractor text-success me-2"></i> <strong>Agricultores:</strong> 8 participantes</p>
+                            <p><i class="fas fa-users text-success me-2"></i> <strong>Asistentes esperados:</strong> 200+</p>
+                            <p><i class="fas fa-tag text-success me-2"></i> <strong>Organiza:</strong> Asociación de Agricultores de Chulucanas</p>
+                        </div>
+                    </div>
+
+                    <h5><i class="fas fa-apple-alt text-success me-2"></i>Productos disponibles</h5>
+                    <div class="mb-4">
+                        <span class="badge bg-success me-2 p-2">Mango Criollo</span>
+                        <span class="badge bg-success me-2 p-2">Mango Kent</span>
+                        <span class="badge bg-success me-2 p-2">Limón Sutil</span>
+                        <span class="badge bg-success me-2 p-2">Plátano de Seda</span>
+                        <span class="badge bg-success me-2 p-2">Maíz</span>
+                    </div>
+
+                    <h5><i class="fas fa-info-circle text-success me-2"></i>Descripción</h5>
+                    <p class="text-muted">
+                        Ven y apoya a nuestros agricultores locales. Encontrarás productos frescos, directo del campo a tu mesa.
+                        ¡Precios justos para todos! Habrá música en vivo y actividades para toda la familia.
+                    </p>
+
+                    <h5><i class="fas fa-store text-success me-2"></i>Agricultores participantes</h5>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-success me-2"></i> Juan Pérez - Mango</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i> María Rodríguez - Limón</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i> Carlos Sánchez - Plátano</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i> Ana Flores - Maíz</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Mapa de ubicación -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>¿Cómo llegar?</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div id="fairDetailMap" style="height: 250px; width: 100%;"></div>
+                    <div class="p-3">
+                        <p class="small text-muted mb-2">
+                            <i class="fas fa-location-dot text-success me-1"></i> Plaza Principal de Chulucanas
+                        </p>
+                        <a href="https://www.google.com/maps?q=-5.0925,-80.1625" target="_blank" class="btn btn-outline-success btn-sm w-100">
+                            <i class="fab fa-google me-1"></i>Abrir en Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5><i class="fas fa-bell text-success me-2"></i>¿Te interesa esta feria?</h5>
+                    <button class="btn btn-success w-100 mb-2">
+                        <i class="fas fa-calendar-plus me-2"></i>Recordarme
+                    </button>
+                    <button class="btn btn-outline-success w-100">
+                        <i class="fas fa-share-alt me-2"></i>Compartir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contacto -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5><i class="fas fa-headset text-success me-2"></i>¿Tienes dudas?</h5>
+                    <p class="small text-muted">Contacta al organizador:</p>
+                    <p class="mb-1"><i class="fab fa-whatsapp text-success me-2"></i> +51 987 654 321</p>
+                    <p><i class="fas fa-envelope text-success me-2"></i> ferias@conectacampo.pe</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // Mapa de detalle
+    var detailMap = L.map('fairDetailMap').setView([-5.0925, -80.1625], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(detailMap);
+
+    L.marker([-5.0925, -80.1625])
+        .bindPopup('<strong>Feria de Chulucanas</strong><br>Plaza Principal')
+        .addTo(detailMap);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

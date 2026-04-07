@@ -55,4 +55,18 @@ public class HomeController {
         model.addAttribute("currentPage", "contact");
         return "contact";
     }
+
+    @GetMapping("/fairs")
+    public String fairs(Model model) {
+        model.addAttribute("title", "Ferias Locales");
+        model.addAttribute("currentPage", "fairs");
+        return "fairs";
+    }
+
+    @GetMapping("/fair/{id}")
+    public String fairDetail(Model model) {
+        model.addAttribute("title", "Detalle de Feria");
+        model.addAttribute("currentPage", "fair-detail");
+        return "fair-detail";
+    }
 }

@@ -5,36 +5,89 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <!-- Hero Section -->
-<div class="bg-success text-white py-5">
-    <div class="container text-center py-5">
-        <h1 class="display-4">ConectaCampo</h1>
-        <p class="lead">Apoyamos a los pequeños agricultores de Piura</p>
-        <p>Eliminamos intermediarios, garantizamos precios justos</p>
-        <div class="mt-4">
-            <a th:href="@{/register}" class="btn btn-light btn-lg me-2">Soy Agricultor</a>
-            <a th:href="@{/register}" class="btn btn-outline-light btn-lg">Quiero Comprar</a>
+<section class="hero-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="fw-bold mb-4">
+                    ConectaCampo
+                    <span class="d-block fs-3 mt-2">Apoyamos a los pequeños agricultores de Piura</span>
+                </h1>
+                <p class="lead mb-4">Eliminamos intermediarios, garantizamos precios justos</p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a th:href="@{/register}" class="btn btn-success btn-lg px-4">
+                        <i class="fas fa-tractor me-2"></i>Soy Agricultor
+                    </a>
+                    <a th:href="@{/register}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fas fa-shopping-cart me-2"></i>Quiero Comprar
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<!-- Beneficios -->
+<!-- Beneficios / Features -->
 <div class="container py-5">
-    <div class="row text-center">
-        <div class="col-md-4 mb-4">
-            <i class="fas fa-hand-holding-usd fa-3x text-success mb-3"></i>
-            <h3>Precios Justos</h3>
-            <p>Recomendamos precios basados en datos reales del mercado local</p>
+    <h2 class="text-center mb-5 fw-bold">¿Por qué elegir ConectaCampo?</h2>
+    <div class="row g-4">
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 text-center border-0 shadow-sm hover-shadow">
+                <div class="card-body py-4">
+                    <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+                        <i class="fas fa-hand-holding-usd fa-2x text-success"></i>
+                    </div>
+                    <h4 class="card-title fw-bold">Precios Justos</h4>
+                    <p class="card-text text-muted small">
+                        Recomendamos precios basados en datos reales del mercado local.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <i class="fas fa-tractor fa-3x text-success mb-3"></i>
-            <h3>Sin Intermediarios</h3>
-            <p>Conexión directa entre agricultor y comprador</p>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 text-center border-0 shadow-sm hover-shadow">
+                <div class="card-body py-4">
+                    <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+                        <i class="fas fa-handshake fa-2x text-success"></i>
+                    </div>
+                    <h4 class="card-title fw-bold">Sin Intermediarios</h4>
+                    <p class="card-text text-muted small">
+                        Conexión directa entre agricultor y comprador. Más ganancia para el productor.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <i class="fas fa-map-marked-alt fa-3x text-success mb-3"></i>
-            <h3>Mapa Interactivo</h3>
-            <p>Encuentra agricultores cerca de tu ubicación</p>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 text-center border-0 shadow-sm hover-shadow">
+                <div class="card-body py-4">
+                    <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+                        <i class="fas fa-map-marked-alt fa-2x text-success"></i>
+                    </div>
+                    <h4 class="card-title fw-bold">Mapa Interactivo</h4>
+                    <p class="card-text text-muted small">
+                        Encuentra agricultores y ferias cerca de tu ubicación.
+                    </p>
+                </div>
+            </div>
         </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 text-center border-0 shadow-sm hover-shadow">
+                <div class="card-body py-4">
+                    <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+                        <i class="fas fa-store fa-2x text-warning"></i>
+                    </div>
+                    <h4 class="card-title fw-bold">Ferias Locales</h4>
+                    <p class="card-text text-muted small">
+                        Eventos cerca de tu comunidad. Ahorra en transporte y compra fresco.
+                    </p>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 

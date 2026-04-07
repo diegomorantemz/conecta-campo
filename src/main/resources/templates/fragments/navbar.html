@@ -1,6 +1,6 @@
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-success">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
     <div class="container">
-        <a class="navbar-brand" th:href="@{/}">
+        <a class="navbar-brand fw-bold" th:href="@{/}">
             <i class="fas fa-leaf me-2"></i>
             ConectaCampo
         </a>
@@ -9,25 +9,38 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+                <!-- Solo las opciones principales -->
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}" th:classappend="${currentPage == 'home'} ? 'active' : ''">Inicio</a>
+                    <a class="nav-link" th:href="@{/}">
+                        <i class="fas fa-home me-1"></i> Inicio
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/map}" th:classappend="${currentPage == 'map'} ? 'active' : ''">Mapa</a>
+                    <a class="nav-link" th:href="@{/map}">
+                        <i class="fas fa-map-marked-alt me-1"></i> Mapa
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/harvests}" th:classappend="${currentPage == 'harvests'} ? 'active' : ''">Cosechas</a>
+                    <a class="nav-link" th:href="@{/harvests}">
+                        <i class="fas fa-apple-alt me-1"></i> Cosechas
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/how-it-works}" th:classappend="${currentPage == 'how-it-works'} ? 'active' : ''">Cómo funciona</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/login}">Iniciar Sesión</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-light text-white" th:href="@{/register}">Registrarse</a>
+                    <a class="nav-link" th:href="@{/fairs}">
+                        <i class="fas fa-store me-1"></i> Ferias
+                    </a>
                 </li>
             </ul>
+
+            <!-- Botones de acción (derecha) -->
+            <div class="d-flex ms-lg-3 mt-2 mt-lg-0">
+                <a class="btn btn-outline-light btn-sm me-2" th:href="@{/login}">
+                    <i class="fas fa-sign-in-alt me-1"></i> Ingresar
+                </a>
+                <a class="btn btn-warning btn-sm" th:href="@{/register}">
+                    <i class="fas fa-user-plus me-1"></i> Registrarse
+                </a>
+            </div>
         </div>
     </div>
 </nav>

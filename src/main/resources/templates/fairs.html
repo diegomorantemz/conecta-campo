@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Ferias Locales')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-2">Ferias Locales</h1>
+    <p class="text-center text-muted mb-4">Encuentra ferias cerca de tu comunidad y compra directo a los agricultores</p>
+
+    <!-- Filtros -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-2">
+            <select class="form-select">
+                <option>Todos los distritos</option>
+                <option>Chulucanas</option>
+                <option>Tambogrande</option>
+                <option>Morropón</option>
+                <option>Piura</option>
+                <option>Sullana</option>
+            </select>
+        </div>
+        <div class="col-md-4 mb-2">
+            <select class="form-select">
+                <option>Todas las fechas</option>
+                <option>Esta semana</option>
+                <option>Este mes</option>
+                <option>Próximas</option>
+            </select>
+        </div>
+        <div class="col-md-4 mb-2">
+            <button class="btn btn-success w-100">
+                <i class="fas fa-search me-1"></i>Buscar ferias
+            </button>
+        </div>
+    </div>
+
+    <!-- Tabs: Próximas / Activas hoy / Finalizadas -->
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#upcoming">
+                <i class="fas fa-calendar-week me-1"></i>Próximas
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#today">
+                <i class="fas fa-sun me-1"></i>Activas hoy
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#past">
+                <i class="fas fa-history me-1"></i>Finalizadas
+            </a>
+        </li>
+    </ul>
+
+    <!-- Contenido de tabs -->
+    <div class="tab-content">
+        <!-- Próximas ferias -->
+        <div class="tab-pane fade show active" id="upcoming">
+            <div class="row">
+                <!-- Feria 1 -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title text-success fw-bold mb-0">Feria de Chulucanas</h5>
+                                <span class="badge bg-success">Próxima</span>
+                            </div>
+                            <p class="card-text small text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i> Sábado 25 de mayo, 2026<br>
+                                <i class="fas fa-clock me-1"></i> 8:00 am - 2:00 pm<br>
+                                <i class="fas fa-map-marker-alt me-1"></i> Plaza Principal de Chulucanas
+                            </p>
+                            <p class="card-text">
+                                <span class="badge bg-secondary">Mango</span>
+                                <span class="badge bg-secondary">Limón</span>
+                                <span class="badge bg-secondary">Plátano</span>
+                            </p>
+                            <p class="small text-muted mb-2">
+                                <i class="fas fa-tractor me-1"></i> 8 agricultores participantes
+                            </p>
+                            <a href="/fair/1" class="btn btn-outline-success btn-sm w-100">
+                                Ver detalles <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feria 2 -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title text-success fw-bold mb-0">Feria de Tambogrande</h5>
+                                <span class="badge bg-success">Próxima</span>
+                            </div>
+                            <p class="card-text small text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i> Domingo 26 de mayo, 2026<br>
+                                <i class="fas fa-clock me-1"></i> 9:00 am - 3:00 pm<br>
+                                <i class="fas fa-map-marker-alt me-1"></i> Mercado Central de Tambogrande
+                            </p>
+                            <p class="card-text">
+                                <span class="badge bg-secondary">Mango</span>
+                                <span class="badge bg-secondary">Limón</span>
+                                <span class="badge bg-secondary">Maíz</span>
+                            </p>
+                            <p class="small text-muted mb-2">
+                                <i class="fas fa-tractor me-1"></i> 12 agricultores participantes
+                            </p>
+                            <a href="/fair/2" class="btn btn-outline-success btn-sm w-100">
+                                Ver detalles <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feria 3 -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title text-success fw-bold mb-0">Feria Campesina - Morropón</h5>
+                                <span class="badge bg-success">Próxima</span>
+                            </div>
+                            <p class="card-text small text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i> Sábado 1 de junio, 2026<br>
+                                <i class="fas fa-clock me-1"></i> 7:00 am - 1:00 pm<br>
+                                <i class="fas fa-map-marker-alt me-1"></i> Plaza de Armas de Morropón
+                            </p>
+                            <p class="card-text">
+                                <span class="badge bg-secondary">Cacao</span>
+                                <span class="badge bg-secondary">Café</span>
+                                <span class="badge bg-secondary">Plátano</span>
+                            </p>
+                            <p class="small text-muted mb-2">
+                                <i class="fas fa-tractor me-1"></i> 15 agricultores participantes
+                            </p>
+                            <a href="/fair/3" class="btn btn-outline-success btn-sm w-100">
+                                Ver detalles <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activas hoy -->
+        <div class="tab-pane fade" id="today">
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle me-2"></i> No hay ferias activas hoy. ¡Revisa las próximas!
+            </div>
+        </div>
+
+        <!-- Finalizadas -->
+        <div class="tab-pane fade" id="past">
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm bg-light">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title text-secondary fw-bold mb-0">Feria de Catacaos</h5>
+                                <span class="badge bg-secondary">Finalizada</span>
+                            </div>
+                            <p class="card-text small text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i> Sábado 18 de mayo, 2026
+                            </p>
+                            <p class="small text-muted mb-0">
+                                <i class="fas fa-check-circle text-success me-1"></i> Asistieron 250 personas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón para ver en mapa -->
+    <div class="text-center mt-4">
+        <a th:href="@{/map}" class="btn btn-outline-success">
+            <i class="fas fa-map-marked-alt me-2"></i>Ver todas las ferias en el mapa
+        </a>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

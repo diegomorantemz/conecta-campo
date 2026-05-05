@@ -21,30 +21,9 @@ public class HomeController {
         return "map";
     }
 
-    @GetMapping("/harvests")
-    public String harvests(Model model) {
-        model.addAttribute("title", "Cosechas Disponibles");
-        model.addAttribute("currentPage", "harvests");
-        return "harvests";
-    }
-
-    @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("title", "Iniciar Sesión");
-        model.addAttribute("currentPage", "login");
-        return "login";
-    }
-
-    @GetMapping("/register")
-    public String register(Model model) {
-        model.addAttribute("title", "Registro de Usuario");
-        model.addAttribute("currentPage", "register");
-        return "register";
-    }
-
     @GetMapping("/how-it-works")
     public String howItWorks(Model model) {
-        model.addAttribute("title", "Cómo Funciona");
+        model.addAttribute("title", "Cómo funciona");
         model.addAttribute("currentPage", "how-it-works");
         return "how-it-works";
     }
@@ -56,17 +35,17 @@ public class HomeController {
         return "contact";
     }
 
-    @GetMapping("/fairs")
-    public String fairs(Model model) {
-        model.addAttribute("title", "Ferias Locales");
-        model.addAttribute("currentPage", "fairs");
-        return "fairs";
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("title", "Iniciar Sesión");
+        model.addAttribute("currentPage", "login");
+        return "login";
     }
 
-    @GetMapping("/fair/{id}")
-    public String fairDetail(Model model) {
-        model.addAttribute("title", "Detalle de Feria");
-        model.addAttribute("currentPage", "fair-detail");
-        return "fair-detail";
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("title", "Registro");
+        model.addAttribute("currentPage", "register");
+        return "register";
     }
 }

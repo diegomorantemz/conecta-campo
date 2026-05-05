@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -22,24 +23,28 @@ public class FairController {
 
     @GetMapping
     public String listFairs(Model model) {
-        List<Fair> upcomingFairs = fairRepository.findByFairDateGreaterThanEqualAndStatus(LocalDate.now(), FairStatus.UPCOMING);
+
+        // Obtener ferias por estado (manejar null con Collections.emptyList())
+        List<Fair> upcomingFairs = fairRepository.findByStatus(FairStatus.UPCOMING);
         List<Fair> activeFairs = fairRepository.findByStatus(FairStatus.ACTIVE);
         List<Fair> finishedFairs = fairRepository.findByStatus(FairStatus.FINISHED);
 
+        // Si la lista es null, usar lista vacía
+        model.addAttribute("upcomingFairs", upcomingFairs != null ? upcomingFairs : Collections.emptyList());
+        model.addAttribute("activeFairs", activeFairs != null ? activeFairs : Collections.emptyList());
+        model.addAttribute("finishedFairs", finishedFairs != null ? finishedFairs : Collections.emptyList());
         model.addAttribute("title", "Ferias Locales");
         model.addAttribute("currentPage", "fairs");
-        model.addAttribute("upcomingFairs", upcomingFairs);
-        model.addAttribute("activeFairs", activeFairs);
-        model.addAttribute("finishedFairs", finishedFairs);
+
         return "fairs";
     }
 
     @GetMapping("/{id}")
     public String fairDetail(@PathVariable Long id, Model model) {
         Fair fair = fairRepository.findById(id).orElse(null);
+        model.addAttribute("fair", fair);
         model.addAttribute("title", "Detalle de Feria");
         model.addAttribute("currentPage", "fairs");
-        model.addAttribute("fair", fair);
         return "fair-detail";
     }
 }

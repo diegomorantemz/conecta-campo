@@ -54,92 +54,37 @@
         </li>
     </ul>
 
-    <!-- Contenido de tabs -->
+    <!-- Contenido de tabs - DATOS DINÁMICOS DESDE BD -->
     <div class="tab-content">
         <!-- Próximas ferias -->
         <div class="tab-pane fade show active" id="upcoming">
             <div class="row">
-                <!-- Feria 1 -->
-                <div class="col-md-6 col-lg-4 mb-4">
+                <div th:each="fair : ${upcomingFairs}" class="col-md-6 col-lg-4 mb-4">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h5 class="card-title text-success fw-bold mb-0">Feria de Chulucanas</h5>
-                                <span class="badge bg-success">Próxima</span>
+                                <h5 class="card-title text-success fw-bold mb-0" th:text="${fair.title}">Feria</h5>
+                                <span class="badge bg-success" th:text="${fair.status}">Próxima</span>
                             </div>
                             <p class="card-text small text-muted">
-                                <i class="fas fa-calendar-alt me-1"></i> Sábado 25 de mayo, 2026<br>
-                                <i class="fas fa-clock me-1"></i> 8:00 am - 2:00 pm<br>
-                                <i class="fas fa-map-marker-alt me-1"></i> Plaza Principal de Chulucanas
-                            </p>
-                            <p class="card-text">
-                                <span class="badge bg-secondary">Mango</span>
-                                <span class="badge bg-secondary">Limón</span>
-                                <span class="badge bg-secondary">Plátano</span>
+                                <i class="fas fa-calendar-alt me-1"></i> <span th:text="${fair.fairDate}">Fecha</span><br>
+                                <i class="fas fa-clock me-1"></i> <span th:text="${fair.startTime}">Hora inicio</span> - <span th:text="${fair.endTime}">Hora fin</span><br>
+                                <i class="fas fa-map-marker-alt me-1"></i> <span th:text="${fair.locationName}">Lugar</span>
                             </p>
                             <p class="small text-muted mb-2">
-                                <i class="fas fa-tractor me-1"></i> 8 agricultores participantes
+                                <i class="fas fa-tractor me-1"></i> Agricultor: <span th:text="${fair.farmer.name}">Nombre</span>
                             </p>
-                            <a href="/fair/1" class="btn btn-outline-success btn-sm w-100">
+                            <a th:href="@{/fairs/{id}(id=${fair.id})}" class="btn btn-outline-success btn-sm w-100">
                                 Ver detalles <i class="fas fa-arrow-right ms-1"></i>
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Feria 2 -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h5 class="card-title text-success fw-bold mb-0">Feria de Tambogrande</h5>
-                                <span class="badge bg-success">Próxima</span>
-                            </div>
-                            <p class="card-text small text-muted">
-                                <i class="fas fa-calendar-alt me-1"></i> Domingo 26 de mayo, 2026<br>
-                                <i class="fas fa-clock me-1"></i> 9:00 am - 3:00 pm<br>
-                                <i class="fas fa-map-marker-alt me-1"></i> Mercado Central de Tambogrande
-                            </p>
-                            <p class="card-text">
-                                <span class="badge bg-secondary">Mango</span>
-                                <span class="badge bg-secondary">Limón</span>
-                                <span class="badge bg-secondary">Maíz</span>
-                            </p>
-                            <p class="small text-muted mb-2">
-                                <i class="fas fa-tractor me-1"></i> 12 agricultores participantes
-                            </p>
-                            <a href="/fair/2" class="btn btn-outline-success btn-sm w-100">
-                                Ver detalles <i class="fas fa-arrow-right ms-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Feria 3 -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h5 class="card-title text-success fw-bold mb-0">Feria Campesina - Morropón</h5>
-                                <span class="badge bg-success">Próxima</span>
-                            </div>
-                            <p class="card-text small text-muted">
-                                <i class="fas fa-calendar-alt me-1"></i> Sábado 1 de junio, 2026<br>
-                                <i class="fas fa-clock me-1"></i> 7:00 am - 1:00 pm<br>
-                                <i class="fas fa-map-marker-alt me-1"></i> Plaza de Armas de Morropón
-                            </p>
-                            <p class="card-text">
-                                <span class="badge bg-secondary">Cacao</span>
-                                <span class="badge bg-secondary">Café</span>
-                                <span class="badge bg-secondary">Plátano</span>
-                            </p>
-                            <p class="small text-muted mb-2">
-                                <i class="fas fa-tractor me-1"></i> 15 agricultores participantes
-                            </p>
-                            <a href="/fair/3" class="btn btn-outline-success btn-sm w-100">
-                                Ver detalles <i class="fas fa-arrow-right ms-1"></i>
-                            </a>
-                        </div>
+                <!-- Mensaje si no hay próximas ferias -->
+                <div th:if="${upcomingFairs.isEmpty()}" class="col-12">
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle me-2"></i> No hay ferias próximas programadas.
                     </div>
                 </div>
             </div>
@@ -147,28 +92,57 @@
 
         <!-- Activas hoy -->
         <div class="tab-pane fade" id="today">
-            <div class="alert alert-info text-center">
-                <i class="fas fa-info-circle me-2"></i> No hay ferias activas hoy. ¡Revisa las próximas!
+            <div class="row">
+                <div th:each="fair : ${activeFairs}" class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm border-warning">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title text-warning fw-bold mb-0" th:text="${fair.title}">Feria</h5>
+                                <span class="badge bg-warning text-dark">Activa hoy</span>
+                            </div>
+                            <p class="card-text small text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i> <span th:text="${fair.fairDate}">Fecha</span><br>
+                                <i class="fas fa-clock me-1"></i> <span th:text="${fair.startTime}">Hora inicio</span> - <span th:text="${fair.endTime}">Hora fin</span><br>
+                                <i class="fas fa-map-marker-alt me-1"></i> <span th:text="${fair.locationName}">Lugar</span>
+                            </p>
+                            <a th:href="@{/fairs/{id}(id=${fair.id})}" class="btn btn-outline-warning btn-sm w-100">
+                                Ver detalles <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${activeFairs.isEmpty()}" class="col-12">
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle me-2"></i> No hay ferias activas hoy. ¡Revisa las próximas!
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Finalizadas -->
         <div class="tab-pane fade" id="past">
             <div class="row">
-                <div class="col-md-6 col-lg-4 mb-4">
+                <div th:each="fair : ${finishedFairs}" class="col-md-6 col-lg-4 mb-4">
                     <div class="card h-100 shadow-sm bg-light">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h5 class="card-title text-secondary fw-bold mb-0">Feria de Catacaos</h5>
+                                <h5 class="card-title text-secondary fw-bold mb-0" th:text="${fair.title}">Feria</h5>
                                 <span class="badge bg-secondary">Finalizada</span>
                             </div>
                             <p class="card-text small text-muted">
-                                <i class="fas fa-calendar-alt me-1"></i> Sábado 18 de mayo, 2026
+                                <i class="fas fa-calendar-alt me-1"></i> <span th:text="${fair.fairDate}">Fecha</span>
                             </p>
-                            <p class="small text-muted mb-0">
-                                <i class="fas fa-check-circle text-success me-1"></i> Asistieron 250 personas
-                            </p>
+                            <a th:href="@{/fairs/{id}(id=${fair.id})}" class="btn btn-outline-secondary btn-sm w-100">
+                                Ver detalles <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
                         </div>
+                    </div>
+                </div>
+
+                <div th:if="${finishedFairs.isEmpty()}" class="col-12">
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle me-2"></i> No hay ferias finalizadas.
                     </div>
                 </div>
             </div>

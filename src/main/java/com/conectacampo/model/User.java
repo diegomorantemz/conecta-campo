@@ -15,6 +15,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User extends BaseEntity {
 
+    @Column(unique = true, length = 8)
+    private String dni;
+
     @Column(nullable = false, length = 50)
     private String name;
 
@@ -33,6 +36,12 @@ public class User extends BaseEntity {
 
     @Column(length = 20)
     private String phone;
+
+    @Column(length = 50)
+    private String department;
+
+    @Column(length = 50)
+    private String province;
 
     @Column(length = 50)
     private String district;

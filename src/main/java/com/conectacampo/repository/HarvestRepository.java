@@ -33,6 +33,8 @@ public interface HarvestRepository extends JpaRepository<Harvest, Long> {
     // Buscar cosechas por finca y producto
     List<Harvest> findByFarmAndProductId(Farm farm, Long productId);
 
+    List<Harvest> findByFarmUserId(Long userId);
+
     // Buscar cosechas activas de una finca específica
     default List<Harvest> findActiveHarvestsByFarm(Farm farm) {
         return findByFarmAndStatus(farm, HarvestStatus.ACTIVE);

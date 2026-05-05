@@ -41,6 +41,7 @@ public class HomeController {
         model.addAttribute("currentPage", "login");
         return "login";
     }
+
     /*
     @GetMapping("/register")
     public String register(Model model) {

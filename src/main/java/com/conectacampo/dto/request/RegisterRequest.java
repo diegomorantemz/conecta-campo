@@ -14,5 +14,5 @@ public class RegisterRequest {
     private String department;
     private String province;
     private String district;
-    private String userType; // "farmer" o "buyer"
+    private String userType;
 }

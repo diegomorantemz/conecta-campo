@@ -20,8 +20,6 @@ public class SecurityConfig {
                         .requestMatchers("/", "/map", "/products", "/harvests", "/fairs",
                                 "/fairs/**", "/register", "/css/**", "/js/**",
                                 "/images/**", "/api/locations/**").permitAll()
-                        // API REST (protegida)
-                        .requestMatchers("/api/harvests/**").authenticated()
                         // Dashboards según rol
                         .requestMatchers("/dashboard/farmer/**").hasRole("FARMER")
                         .requestMatchers("/dashboard/buyer/**").hasRole("BUYER")

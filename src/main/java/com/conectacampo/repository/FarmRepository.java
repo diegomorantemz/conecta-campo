@@ -17,9 +17,9 @@ public interface FarmRepository extends JpaRepository<Farm, Long> {
     // Buscar fincas por distrito
     List<Farm> findByDistrict(String district);
 
-    // Buscar fincas por nombre (contiene)
+    // Buscar fincas por nombre
     List<Farm> findByNameContainingIgnoreCase(String name);
 
-    // Buscar finca por nombre exacto (para DataInitializer)
-    Optional<Farm> findByName(String name);  // ← Agrega esta línea
+    // Buscar finca por nombre exacto
+    Optional<Farm> findByName(String name);
 }

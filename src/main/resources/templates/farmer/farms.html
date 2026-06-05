@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Mis Fincas')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="display-5">
+                    <i class="fas fa-tractor text-success me-3"></i>
+                    Mis Fincas
+                </h1>
+                <a th:href="@{/farmer/farms/create}" class="btn btn-success">
+                    <i class="fas fa-plus-circle me-2"></i>Nueva Finca
+                </a>
+            </div>
+            <p class="text-muted">Gestiona tus fincas o parcelas.</p>
+            <hr>
+        </div>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div th:if="${farms.isEmpty()}" class="alert alert-info text-center">
+                <i class="fas fa-info-circle me-2"></i>
+                No tienes fincas registradas aún.
+                <a th:href="@{/farmer/farms/create}" class="alert-link">¡Crea tu primera finca!</a>
+            </div>
+            <div th:unless="${farms.isEmpty()}">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Distrito</th>
+                            <th>Ubicación</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </thead>
+                        </thead>
+                        <tbody>
+                        <tr th:each="farm : ${farms}">
+                            <td th:text="${farm.name}">－</td>
+                            <td th:text="${farm.district}">－</td>
+                            <td>
+                                    <span th:if="${farm.locationLat != null and farm.locationLng != null}">
+                                        <i class="fas fa-map-marker-alt text-success"></i>
+                                        <span th:text="${farm.locationLat}"></span>, <span th:text="${farm.locationLng}"></span>
+                                    </span>
+                                <span th:unless="${farm.locationLat != null and farm.locationLng != null}">
+                                        <span class="text-muted">No especificada</span>
+                                    </span>
+                            </td>
+                            <td th:text="${farm.description != null ? farm.description : 'Sin descripción'}">－</td>
+                            <td>
+                                <a th:href="@{/farmer/farms/edit/{id}(id=${farm.id})}"
+                                   class="btn btn-sm btn-outline-primary me-1">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                                <a th:href="@{/farmer/farms/delete/{id}(id=${farm.id})}"
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('¿Estás seguro de eliminar esta finca?')">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

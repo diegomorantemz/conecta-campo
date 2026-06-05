@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Formulario de Cosecha')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>
+                        <span th:text="${harvest.id != null} ? 'Editar Cosecha' : 'Nueva Cosecha'"></span>
+                    </h4>
+                </div>
+                <div class="card-body">
+
+                    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+                    <!-- ⚠️ Mensaje si NO TIENE FINCAS -->
+                    <div th:if="${noFarms}" class="alert alert-warning text-center">
+                        <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                        <h5>No tienes fincas registradas</h5>
+                        <p>Para crear una cosecha, primero debes registrar una finca.</p>
+                        <a th:href="@{/farmer/farms/create}" class="btn btn-warning">
+                            <i class="fas fa-tractor me-2"></i>Crear Finca
+                        </a>
+                    </div>
+
+                    <!-- ✅ Formulario solo si TIENE FINCAS -->
+                    <form th:unless="${noFarms}" th:action="@{/farmer/harvests/save}" th:object="${harvest}" method="post">
+                        <input type="hidden" th:field="*{id}">
+
+                        <div class="mb-3">
+                            <label class="form-label">Producto *</label>
+                            <select th:field="*{product.id}" class="form-select" required>
+                                <option value="">Selecciona un producto</option>
+                                <option th:each="product : ${products}" th:value="${product.id}"
+                                        th:text="${product.name} + ' - ' + ${product.variety}"></option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Finca *</label>
+                            <select th:field="*{farm.id}" class="form-select" required>
+                                <option value="">Selecciona una finca</option>
+                                <option th:each="farm : ${farms}" th:value="${farm.id}"
+                                        th:text="${farm.name} + ' - ' + ${farm.district}"></option>
+                            </select>
+                            <small class="text-muted">Selecciona la finca donde se produjo esta cosecha</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cantidad (kg) *</label>
+                            <input type="number" step="0.01" th:field="*{quantity}" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Precio sugerido (S/ por kg) *</label>
+                            <input type="number" step="0.01" th:field="*{priceSuggested}" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de cosecha</label>
+                            <input type="date" th:field="*{harvestDate}" class="form-control">
+                            <small class="text-muted">Opcional. Si no la especificas, se mostrará como "disponible ahora"</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="fas fa-save me-2"></i>Guardar Cosecha
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

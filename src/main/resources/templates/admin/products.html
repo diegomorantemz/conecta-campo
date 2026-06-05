@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Gestionar Productos')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="display-5">
+                    <i class="fas fa-box-open text-success me-3"></i>
+                    Productos
+                </h1>
+                <a th:href="@{/admin/products/create}" class="btn btn-success">
+                    <i class="fas fa-plus-circle me-2"></i>Nuevo Producto
+                </a>
+            </div>
+            <p class="text-muted">Gestiona el catálogo de productos agrícolas.</p>
+            <hr>
+        </div>
+    </div>
+
+    <!-- Mensajes -->
+    <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <!-- Tabla de productos -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Variedad</th>
+                        <th>Categoría</th>
+                        <th>Unidad</th>
+                        <th>Precio min</th>
+                        <th>Precio max</th>
+                        <th>Temporada</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.id}"></td>
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.variety}"></td>
+                        <td><span class="badge bg-secondary" th:text="${product.category}"></span></td>
+                        <td th:text="${product.unit}"></td>
+                        <td>S/ <span th:text="${product.minPrice}"></span></td>
+                        <td>S/ <span th:text="${product.maxPrice}"></span></td>
+                        <td th:text="${product.seasonStart} + ' - ' + ${product.seasonEnd}"></td>
+                        <td>
+                            <a th:href="@{/admin/products/edit/{id}(id=${product.id})}" class="btn btn-sm btn-outline-primary me-1">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a th:href="@{/admin/products/delete/{id}(id=${product.id})}"
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('¿Estás seguro de eliminar este producto?')">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

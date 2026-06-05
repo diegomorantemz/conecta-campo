@@ -18,9 +18,6 @@ public interface HarvestRepository extends JpaRepository<Harvest, Long> {
     // Buscar cosechas por estado
     List<Harvest> findByStatus(HarvestStatus status);
 
-    // Buscar cosechas activas (alias del método anterior, usa findByStatus)
-    // Para obtener cosechas activas: repository.findByStatus(HarvestStatus.ACTIVE)
-
     // Buscar cosechas por producto
     List<Harvest> findByProductId(Long productId);
 

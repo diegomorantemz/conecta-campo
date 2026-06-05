@@ -8,6 +8,7 @@ import com.conectacampo.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -26,12 +27,15 @@ public class DataInitializer implements CommandLineRunner {
     private final ProvinceRepository provinceRepository;
     private final DistrictRepository districtRepository;
     private final FairRepository fairRepository;
+    private final PasswordEncoder passwordEncoder;  // ← AGREGAR ESTO
 
     @Override
     public void run(String... args) throws Exception {
         log.info("INICIANDO DATA INITIALIZER");
 
-        // Crear usuario ADMINISTRADOR
+        // ==========================================
+        // 1. Crear usuario ADMINISTRADOR (con contraseña encriptada)
+        // ==========================================
         if (userRepository.count() == 0) {
             log.info("Creando usuario administrador...");
 
@@ -39,7 +43,7 @@ public class DataInitializer implements CommandLineRunner {
             admin.setName("Administrador");
             admin.setLastname("Sistema");
             admin.setEmail("admin@conectacampo.pe");
-            admin.setPassword("admin123");
+            admin.setPassword(passwordEncoder.encode("admin123"));  // ← ENCRIPTADO
             admin.setRole(Role.ADMIN);
             admin.setPhone("987654321");
             admin.setDni("00000000");
@@ -50,7 +54,9 @@ public class DataInitializer implements CommandLineRunner {
             log.info("Administrador creado: admin@conectacampo.pe / admin123");
         }
 
-        // Crear PRODUCTOS
+        // ==========================================
+        // 2. Crear PRODUCTOS
+        // ==========================================
         if (productRepository.count() == 0) {
             log.info("Cargando catálogo de productos...");
 
@@ -67,7 +73,9 @@ public class DataInitializer implements CommandLineRunner {
             log.info("{} productos cargados", productRepository.count());
         }
 
-        // Crear AGRICULTORES de ejemplo
+        // ==========================================
+        // 3. Crear AGRICULTORES de ejemplo (con contraseñas encriptadas)
+        // ==========================================
         if (userRepository.findByRole(Role.FARMER).isEmpty()) {
             log.info("Creando agricultores de ejemplo...");
 
@@ -75,7 +83,7 @@ public class DataInitializer implements CommandLineRunner {
             farmer1.setName("Juan");
             farmer1.setLastname("Pérez");
             farmer1.setEmail("juan@conectacampo.pe");
-            farmer1.setPassword("123456");
+            farmer1.setPassword(passwordEncoder.encode("123456"));  // ← ENCRIPTADO
             farmer1.setRole(Role.FARMER);
             farmer1.setPhone("987654321");
             farmer1.setDni("12345678");
@@ -88,7 +96,7 @@ public class DataInitializer implements CommandLineRunner {
             farmer2.setName("María");
             farmer2.setLastname("Rodríguez");
             farmer2.setEmail("maria@conectacampo.pe");
-            farmer2.setPassword("123456");
+            farmer2.setPassword(passwordEncoder.encode("123456"));  // ← ENCRIPTADO
             farmer2.setRole(Role.FARMER);
             farmer2.setPhone("987123456");
             farmer2.setDni("87654321");
@@ -101,7 +109,7 @@ public class DataInitializer implements CommandLineRunner {
             farmer3.setName("Comunidad");
             farmer3.setLastname("Huancabamba");
             farmer3.setEmail("huancabamba@conectacampo.pe");
-            farmer3.setPassword("123456");
+            farmer3.setPassword(passwordEncoder.encode("123456"));  // ← ENCRIPTADO
             farmer3.setRole(Role.FARMER);
             farmer3.setPhone("973123456");
             farmer3.setDni("11111111");
@@ -113,7 +121,9 @@ public class DataInitializer implements CommandLineRunner {
             log.info("Total agricultores creados: 3");
         }
 
-        // Crear FINCAS para los agricultores
+        // ==========================================
+        // 4. Crear FINCAS para los agricultores
+        // ==========================================
         if (farmRepository.count() == 0) {
             log.info("Creando fincas...");
 
@@ -160,7 +170,9 @@ public class DataInitializer implements CommandLineRunner {
             log.info("{} fincas creadas", farmRepository.count());
         }
 
-        // Crear COSECHAS de ejemplo
+        // ==========================================
+        // 5. Crear COSECHAS de ejemplo
+        // ==========================================
         if (harvestRepository.count() == 0) {
             log.info("Creando cosechas de ejemplo...");
 
@@ -250,7 +262,9 @@ public class DataInitializer implements CommandLineRunner {
             log.info("{} cosechas creadas", harvestRepository.count());
         }
 
-        // Cargar ubicaciones de Piura
+        // ==========================================
+        // 6. Cargar ubicaciones de Piura
+        // ==========================================
         if (departmentRepository.count() == 0) {
             log.info("Cargando ubicaciones de Piura...");
 
@@ -311,7 +325,7 @@ public class DataInitializer implements CommandLineRunner {
             }
             log.info("9 distritos de Morropón cargados");
 
-            // Provincia: Huancabamba=
+            // Provincia: Huancabamba
             Province huancabamba = new Province();
             huancabamba.setName("Huancabamba");
             huancabamba.setDepartment(piura);
@@ -398,18 +412,18 @@ public class DataInitializer implements CommandLineRunner {
             log.info("Ubicaciones ya existen en la BD, saltando carga...");
         }
 
-        // Crear FERIAS de ejemplo
+        // ==========================================
+        // 7. Crear FERIAS de ejemplo
+        // ==========================================
         if (fairRepository.count() == 0) {
             log.info("Creando ferias de ejemplo...");
 
-            // Obtener un agricultor para asociar las ferias
             User farmer = userRepository.findByEmail("juan@conectacampo.pe").orElse(null);
             if (farmer == null) {
                 farmer = userRepository.findByRole(Role.FARMER).stream().findFirst().orElse(null);
             }
 
             if (farmer != null) {
-
                 Fair fair1 = new Fair();
                 fair1.setFarmer(farmer);
                 fair1.setTitle("Feria de Chulucanas");

@@ -25,10 +25,17 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
 
+                    <!-- Mensaje de error de autenticación -->
+                    <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        Correo electrónico o contraseña incorrectos.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
                     <form th:action="@{/login}" method="post">
                         <div class="mb-3">
                             <label class="form-label">Correo electrónico</label>
-                            <input type="email" name="email" class="form-control" placeholder="ejemplo@conectacampo.pe" required>
+                            <input type="email" name="username" class="form-control" placeholder="ejemplo@conectacampo.pe" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Contraseña</label>

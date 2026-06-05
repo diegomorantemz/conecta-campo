@@ -57,7 +57,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4 mb-2">
-                            <a href="#" class="btn btn-outline-success w-100 py-3">
+                            <a th:href="@{/farmer/harvests/create}" class="btn btn-outline-success w-100 py-3">
                                 <i class="fas fa-plus-circle me-2"></i>Nueva Cosecha
                             </a>
                         </div>
@@ -67,8 +67,13 @@
                             </a>
                         </div>
                         <div class="col-md-4 mb-2">
-                            <a th:href="@{/harvests}" class="btn btn-outline-success w-100 py-3">
-                                <i class="fas fa-eye me-2"></i>Ver mis cosechas
+                            <a th:href="@{/farmer/harvests}" class="btn btn-outline-success w-100 py-3">
+                                <i class="fas fa-list me-2"></i>Mis Cosechas
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <a th:href="@{/farmer/farms}" class="btn btn-outline-success w-100 py-3">
+                                <i class="fas fa-tractor me-2"></i>Mis Fincas
                             </a>
                         </div>
                     </div>
@@ -87,7 +92,7 @@
                 <div class="card-body">
                     <div th:if="${recentHarvests.isEmpty()}" class="alert alert-info text-center">
                         <i class="fas fa-info-circle me-2"></i>No tienes cosechas registradas aún.
-                        <a href="#" class="alert-link">¡Crea tu primera cosecha!</a>
+                        <a th:href="@{/farmer/harvests/create}" class="alert-link">¡Crea tu primera cosecha!</a>
                     </div>
                     <div th:unless="${recentHarvests.isEmpty()}">
                         <div class="table-responsive">
@@ -99,7 +104,7 @@
                                     <th>Precio</th>
                                     <th>Estado</th>
                                     <th>Fecha</th>
-                                    <th>Acción</th>
+                                    <th>Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -116,7 +121,15 @@
                                     </td>
                                     <td th:text="${#dates.format(harvest.createdAt, 'dd/MM/yyyy')}">fecha</td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-outline-primary">Editar</a>
+                                        <a th:href="@{/farmer/harvests/edit/{id}(id=${harvest.id})}"
+                                           class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </a>
+                                        <a th:href="@{/farmer/harvests/delete/{id}(id=${harvest.id})}"
+                                           class="btn btn-sm btn-outline-danger"
+                                           onclick="return confirm('¿Estás seguro de eliminar esta cosecha?')">
+                                            <i class="fas fa-trash"></i> Eliminar
+                                        </a>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -52,7 +52,13 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Teléfono</label>
-                                <input type="tel" th:field="*{phone}" class="form-control" placeholder="987654321" required>
+                                <input type="tel" th:field="*{phone}" class="form-control"
+                                       placeholder="987654321"
+                                       pattern="[0-9]{9}"
+                                       maxlength="9"
+                                       title="El teléfono debe tener 9 dígitos numéricos"
+                                       required>
+                                <small class="text-muted">9 dígitos, solo números (ej: 987654321)</small>
                             </div>
                         </div>
 

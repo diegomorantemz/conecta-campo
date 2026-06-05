@@ -7,7 +7,10 @@ import com.conectacampo.model.enums.Role;
 import com.conectacampo.repository.FairRepository;
 import com.conectacampo.repository.HarvestRepository;
 import com.conectacampo.repository.UserRepository;
+import com.conectacampo.model.enums.FairStatus;
+import com.conectacampo.model.enums.HarvestStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,14 +27,15 @@ public class DashboardController {
     private final HarvestRepository harvestRepository;
     private final FairRepository fairRepository;
 
-    // Dashboard para agricultor (datos de prueba con usuario fijo)
+    // Dashboard para agricultor
     @GetMapping("/farmer")
-    public String farmerDashboard(Model model) {
-        // Temporal: obtener un agricultor de ejemplo (id=2 o el primero que encuentre)
-        User farmer = userRepository.findByRole(Role.FARMER).stream().findFirst().orElse(null);
+    public String farmerDashboard(Model model, Authentication authentication) {
+        // Obtener el email del usuario autenticado
+        String email = authentication.getName();
+        User farmer = userRepository.findByEmail(email).orElse(null);
 
         if (farmer != null) {
-            // Obtener cosechas del agricultor
+            // Obtener cosechas del agricultor autenticado
             List<Harvest> myHarvests = harvestRepository.findByFarmUserId(farmer.getId());
             long activeHarvests = myHarvests.stream().filter(h -> h.getStatus() == HarvestStatus.ACTIVE).count();
             long totalHarvests = myHarvests.size();
@@ -42,6 +46,12 @@ public class DashboardController {
             model.addAttribute("totalHarvests", totalHarvests);
             model.addAttribute("myFairs", myFairs);
             model.addAttribute("recentHarvests", myHarvests.stream().limit(5).toList());
+        } else {
+            model.addAttribute("farmerName", "Agricultor");
+            model.addAttribute("activeHarvests", 0);
+            model.addAttribute("totalHarvests", 0);
+            model.addAttribute("myFairs", 0);
+            model.addAttribute("recentHarvests", List.of());
         }
 
         model.addAttribute("title", "Panel del Agricultor");
@@ -49,27 +59,29 @@ public class DashboardController {
         return "farmer-dashboard";
     }
 
-    // Dashboard para comprador (datos de prueba)
+    // Dashboard para comprador
     @GetMapping("/buyer")
-    public String buyerDashboard(Model model) {
-        // Temporal: obtener un comprador de ejemplo o crear uno de prueba
-        User buyer = userRepository.findByRole(Role.BUYER).stream().findFirst().orElse(null);
+    public String buyerDashboard(Model model, Authentication authentication) {
+        // Obtener el email del usuario autenticado
+        String email = authentication.getName();
+        User buyer = userRepository.findByEmail(email).orElse(null);
 
-        if (buyer == null) {
-            // Crear un comprador de prueba si no existe
-            buyer = new User();
-            buyer.setName("Cliente");
-            buyer.setLastname("Prueba");
-            buyer.setEmail("cliente@test.com");
-            buyer.setRole(Role.BUYER);
+        String buyerName = "Comprador";
+        if (buyer != null) {
+            buyerName = buyer.getName() + " " + buyer.getLastname();
         }
 
-        long totalFairsNearby = fairRepository.count(); // Temporal: todas las ferias
-        long recentContacts = 0; // Temporal, luego se conecta con ContactRepository
+        // Estadísticas útiles para un comprador
+        long totalHarvests = harvestRepository.count();           // Total de cosechas disponibles
+        long activeHarvests = harvestRepository.findByStatus(HarvestStatus.ACTIVE).size();  // Cosechas activas
+        long totalFairs = fairRepository.count();                 // Total de ferias
+        long upcomingFairs = fairRepository.findByStatus(FairStatus.UPCOMING).size();  // Ferias próximas
 
-        model.addAttribute("buyerName", buyer.getName() + " " + buyer.getLastname());
-        model.addAttribute("totalFairsNearby", totalFairsNearby);
-        model.addAttribute("recentContacts", recentContacts);
+        model.addAttribute("buyerName", buyerName);
+        model.addAttribute("totalHarvests", totalHarvests);
+        model.addAttribute("activeHarvests", activeHarvests);
+        model.addAttribute("totalFairs", totalFairs);
+        model.addAttribute("upcomingFairs", upcomingFairs);
         model.addAttribute("title", "Panel del Comprador");
         model.addAttribute("currentPage", "buyer-dashboard");
         return "buyer-dashboard";

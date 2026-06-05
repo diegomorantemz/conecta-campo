@@ -13,7 +13,7 @@
 
         <!-- Menú colapsable -->
         <div class="collapse navbar-collapse" id="navbarNav">
-            <!-- Enlaces principales -->
+            <!-- Enlaces principales (visibles para todos) -->
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/map}">
@@ -21,7 +21,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/products}" th:classappend="${currentPage == 'products'} ? 'active' : ''">
+                    <a class="nav-link" th:href="@{/products}">
                         <i class="fas fa-box-open me-1"></i> Productos
                     </a>
                 </li>
@@ -36,26 +36,62 @@
                     </a>
                 </li>
 
-                <!-- Dropdown Mi Cuenta -->
-                <li class="nav-item dropdown">
+                <!-- ========================================== -->
+                <!-- Opciones para usuarios AUTENTICADOS -->
+                <!-- ========================================== -->
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                         <i class="fas fa-user-circle me-1"></i> Mi Cuenta
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" th:href="@{/dashboard/farmer}">
-                            <i class="fas fa-tractor me-2"></i> Panel Agricultor
-                        </a></li>
-                        <li><a class="dropdown-item" th:href="@{/dashboard/buyer}">
-                            <i class="fas fa-shopping-cart me-2"></i> Panel Comprador
-                        </a></li>
+                        <!-- Opción MI PERFIL (para todos los roles) -->
+                        <li>
+                            <a class="dropdown-item" th:href="@{/profile}">
+                                <i class="fas fa-user-edit me-2"></i> Mi Perfil
+                            </a>
+                        </li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" th:href="@{/login}">
-                            <i class="fas fa-sign-in-alt me-2"></i> Iniciar Sesión
-                        </a></li>
-                        <li><a class="dropdown-item" th:href="@{/register}">
-                            <i class="fas fa-user-plus me-2"></i> Registrarse
-                        </a></li>
+
+                        <!-- PANELES POR ROL (cada uno aparece solo una vez) -->
+                        <li sec:authorize="hasRole('ADMIN')">
+                            <a class="dropdown-item" th:href="@{/admin/dashboard}">
+                                <i class="fas fa-user-shield me-2"></i> Panel Admin
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('FARMER')">
+                            <a class="dropdown-item" th:href="@{/dashboard/farmer}">
+                                <i class="fas fa-tractor me-2"></i> Panel Agricultor
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('BUYER')">
+                            <a class="dropdown-item" th:href="@{/dashboard/buyer}">
+                                <i class="fas fa-shopping-cart me-2"></i> Panel Comprador
+                            </a>
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post" class="dropdown-item p-0">
+                                <button type="submit" class="dropdown-item" style="background: none; border: none;">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión
+                                </button>
+                            </form>
+                        </li>
                     </ul>
+                </li>
+
+                <!-- ========================================== -->
+                <!-- Opciones para usuarios NO AUTENTICADOS -->
+                <!-- ========================================== -->
+                <li class="nav-item" sec:authorize="isAnonymous()">
+                    <a class="nav-link btn btn-outline-light text-white ms-2" th:href="@{/login}">
+                        <i class="fas fa-sign-in-alt me-1"></i> Ingresar
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="isAnonymous()">
+                    <a class="nav-link btn btn-warning ms-2" th:href="@{/register}">
+                        <i class="fas fa-user-plus me-1"></i> Registrarse
+                    </a>
                 </li>
             </ul>
         </div>

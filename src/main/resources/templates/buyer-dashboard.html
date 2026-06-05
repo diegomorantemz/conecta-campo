@@ -18,30 +18,39 @@
 
     <!-- Tarjetas de estadísticas -->
     <div class="row mb-4">
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <div class="card text-center border-success shadow-sm">
                 <div class="card-body">
                     <i class="fas fa-apple-alt fa-3x text-success mb-2"></i>
                     <h3 class="card-title fw-bold" th:text="${totalHarvests}">0</h3>
-                    <p class="card-text text-muted">Cosechas disponibles</p>
+                    <p class="card-text text-muted">Cosechas totales</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-success shadow-sm">
+                <div class="card-body">
+                    <i class="fas fa-check-circle fa-3x text-success mb-2"></i>
+                    <h3 class="card-title fw-bold" th:text="${activeHarvests}">0</h3>
+                    <p class="card-text text-muted">Cosechas activas</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
             <div class="card text-center border-success shadow-sm">
                 <div class="card-body">
                     <i class="fas fa-store fa-3x text-success mb-2"></i>
-                    <h3 class="card-title fw-bold" th:text="${totalFairsNearby}">0</h3>
-                    <p class="card-text text-muted">Ferias cercanas</p>
+                    <h3 class="card-title fw-bold" th:text="${totalFairs}">0</h3>
+                    <p class="card-text text-muted">Ferias totales</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <div class="card text-center border-success shadow-sm">
                 <div class="card-body">
-                    <i class="fas fa-envelope fa-3x text-success mb-2"></i>
-                    <h3 class="card-title fw-bold" th:text="${recentContacts}">0</h3>
-                    <p class="card-text text-muted">Contactos realizados</p>
+                    <i class="fas fa-calendar-week fa-3x text-success mb-2"></i>
+                    <h3 class="card-title fw-bold" th:text="${upcomingFairs}">0</h3>
+                    <p class="card-text text-muted">Ferias próximas</p>
                 </div>
             </div>
         </div>
@@ -56,19 +65,24 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-3 mb-2">
                             <a th:href="@{/harvests}" class="btn btn-outline-success w-100 py-3">
                                 <i class="fas fa-apple-alt me-2"></i>Ver Cosechas
                             </a>
                         </div>
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-3 mb-2">
                             <a th:href="@{/map}" class="btn btn-outline-success w-100 py-3">
                                 <i class="fas fa-map-marked-alt me-2"></i>Ver Mapa
                             </a>
                         </div>
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-3 mb-2">
                             <a th:href="@{/fairs}" class="btn btn-outline-success w-100 py-3">
                                 <i class="fas fa-store me-2"></i>Ver Ferias
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <a th:href="@{/products}" class="btn btn-outline-success w-100 py-3">
+                                <i class="fas fa-box-open me-2"></i>Ver Productos
                             </a>
                         </div>
                     </div>

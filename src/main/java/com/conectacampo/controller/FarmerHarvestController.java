@@ -9,10 +9,13 @@ import com.conectacampo.repository.FarmRepository;
 import com.conectacampo.repository.HarvestRepository;
 import com.conectacampo.repository.ProductRepository;
 import com.conectacampo.repository.UserRepository;
+import com.conectacampo.service.HarvestService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,8 +30,8 @@ public class FarmerHarvestController {
     private final ProductRepository productRepository;
     private final FarmRepository farmRepository;
     private final UserRepository userRepository;
+    private final HarvestService harvestService;
 
-    // Lista de mis cosechas
     @GetMapping
     public String myHarvests(Model model, Authentication authentication) {
         String email = authentication.getName();
@@ -46,7 +49,6 @@ public class FarmerHarvestController {
         return "farmer/harvests";
     }
 
-    // Formulario para crear cosecha
     @GetMapping("/create")
     public String createForm(Model model, Authentication authentication) {
         String email = authentication.getName();
@@ -56,15 +58,12 @@ public class FarmerHarvestController {
         Harvest harvest = new Harvest();
 
         if (farmer != null) {
-            // ✅ Obtener TODAS las fincas del agricultor
             List<Farm> farms = farmRepository.findByUser(farmer);
             model.addAttribute("farms", farms);
 
-            // ✅ Verificar si tiene fincas
             if (farms.isEmpty()) {
                 model.addAttribute("noFarms", true);
             } else if (farms.size() == 1) {
-                // Si solo tiene una finca, seleccionarla automáticamente
                 harvest.setFarm(farms.get(0));
             }
         }
@@ -75,17 +74,29 @@ public class FarmerHarvestController {
         return "farmer/harvest-form";
     }
 
-    // Guardar cosecha (crear o actualizar)
     @PostMapping("/save")
-    public String save(@ModelAttribute Harvest harvest,
+    public String save(@Valid @ModelAttribute("harvest") Harvest harvest,
+                       BindingResult result,
                        Authentication authentication,
-                       RedirectAttributes redirectAttributes) {
+                       RedirectAttributes redirectAttributes,
+                       Model model) {
+
+        if (result.hasErrors()) {
+            String email = authentication.getName();
+            User farmer = userRepository.findByEmail(email).orElse(null);
+            if (farmer != null) {
+                model.addAttribute("farms", farmRepository.findByUser(farmer));
+            }
+            model.addAttribute("products", productRepository.findAll());
+            model.addAttribute("title", "Nueva Cosecha");
+            return "farmer/harvest-form";
+        }
+
         try {
             String email = authentication.getName();
             User farmer = userRepository.findByEmail(email).orElse(null);
 
             if (farmer != null) {
-                // ✅ Validar que la finca existe y pertenece al agricultor
                 if (harvest.getFarm() == null || harvest.getFarm().getId() == null) {
                     redirectAttributes.addFlashAttribute("error", "Debes seleccionar una finca.");
                     return "redirect:/farmer/harvests/create";
@@ -110,7 +121,6 @@ public class FarmerHarvestController {
         return "redirect:/farmer/harvests";
     }
 
-    // Formulario para editar
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         Harvest harvest = harvestRepository.findById(id).orElse(null);
@@ -121,7 +131,6 @@ public class FarmerHarvestController {
 
         List<Product> products = productRepository.findAll();
 
-        // ✅ Obtener las fincas del agricultor para el selector
         if (harvest.getFarm() != null && harvest.getFarm().getUser() != null) {
             List<Farm> farms = farmRepository.findByUser(harvest.getFarm().getUser());
             model.addAttribute("farms", farms);
@@ -133,14 +142,13 @@ public class FarmerHarvestController {
         return "farmer/harvest-form";
     }
 
-    // Eliminar cosecha
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
-            harvestRepository.deleteById(id);
+            harvestService.deleteHarvest(id);
             redirectAttributes.addFlashAttribute("success", "Cosecha eliminada correctamente.");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "No se puede eliminar la cosecha.");
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/farmer/harvests";
     }

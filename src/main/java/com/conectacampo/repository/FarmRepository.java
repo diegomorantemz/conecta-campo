@@ -11,15 +11,11 @@ import java.util.Optional;
 @Repository
 public interface FarmRepository extends JpaRepository<Farm, Long> {
 
-    // Buscar fincas por agricultor
     List<Farm> findByUser(User user);
 
-    // Buscar fincas por distrito
     List<Farm> findByDistrict(String district);
 
-    // Buscar fincas por nombre
     List<Farm> findByNameContainingIgnoreCase(String name);
 
-    // Buscar finca por nombre exacto
     Optional<Farm> findByName(String name);
 }

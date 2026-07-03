@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:temporals="http://www.thymeleaf.org/thymeleaf-extras-temporals">
 <head th:replace="fragments/head :: head('Panel del Agricultor')"></head>
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
@@ -16,7 +16,6 @@
         </div>
     </div>
 
-    <!-- Tarjetas de estadísticas -->
     <div class="row mb-4">
         <div class="col-md-4 mb-3">
             <div class="card text-center border-success shadow-sm">
@@ -47,7 +46,6 @@
         </div>
     </div>
 
-    <!-- Acciones rápidas -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card shadow-sm">
@@ -82,7 +80,6 @@
         </div>
     </div>
 
-    <!-- Cosechas recientes -->
     <div class="row">
         <div class="col-12">
             <div class="card shadow-sm">
@@ -119,7 +116,7 @@
                                             <span class="badge" th:classappend="${harvest.status == 'ACTIVE'} ? 'bg-success' : 'bg-secondary'"
                                                   th:text="${harvest.status}"></span>
                                     </td>
-                                    <td th:text="${#dates.format(harvest.createdAt, 'dd/MM/yyyy')}">fecha</td>
+                                    <td th:text="${#temporals.format(harvest.createdAt, 'dd/MM/yyyy')}">fecha</td>
                                     <td>
                                         <a th:href="@{/farmer/harvests/edit/{id}(id=${harvest.id})}"
                                            class="btn btn-sm btn-outline-primary me-1">

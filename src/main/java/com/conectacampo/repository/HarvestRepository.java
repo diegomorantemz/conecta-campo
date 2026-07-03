@@ -12,27 +12,20 @@ import java.util.List;
 @Repository
 public interface HarvestRepository extends JpaRepository<Harvest, Long> {
 
-    // Buscar cosechas por finca
     List<Harvest> findByFarm(Farm farm);
 
-    // Buscar cosechas por estado
     List<Harvest> findByStatus(HarvestStatus status);
 
-    // Buscar cosechas por producto
     List<Harvest> findByProductId(Long productId);
 
-    // Buscar cosechas por rango de fechas
     List<Harvest> findByHarvestDateBetween(LocalDate start, LocalDate end);
 
-    // Buscar cosechas por finca y estado
     List<Harvest> findByFarmAndStatus(Farm farm, HarvestStatus status);
 
-    // Buscar cosechas por finca y producto
     List<Harvest> findByFarmAndProductId(Farm farm, Long productId);
 
     List<Harvest> findByFarmUserId(Long userId);
 
-    // Buscar cosechas activas de una finca específica
     default List<Harvest> findActiveHarvestsByFarm(Farm farm) {
         return findByFarmAndStatus(farm, HarvestStatus.ACTIVE);
     }

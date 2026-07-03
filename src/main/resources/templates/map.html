@@ -8,7 +8,6 @@
     <h1 class="text-center mb-2">Mapa Agropecuario</h1>
     <p class="text-center text-muted mb-4">Encuentra agricultores y ferias cerca de ti</p>
 
-    <!-- Leyenda de colores -->
     <div class="d-flex justify-content-center gap-4 mb-3 flex-wrap">
         <div><i class="fas fa-map-marker-alt text-success"></i> <span class="small">Agricultor (finca fija)</span></div>
         <div><i class="fas fa-map-marker-alt text-warning"></i> <span class="small">Feria local (evento temporal)</span></div>
@@ -27,41 +26,36 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // Inicializar mapa
+
     var map = L.map('map').setView([-5.194, -80.632], 9);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // ========== AGRICULTORES (verde) ==========
     var farmers = [
         { lat: -5.0925, lng: -80.1625, name: "Finca El Mango", products: "Mango, Plátano", district: "Chulucanas", type: "farmer" },
         { lat: -4.9244, lng: -80.3414, name: "Finca Los Limones", products: "Limón, Maíz", district: "Tambogrande", type: "farmer" },
         { lat: -5.2000, lng: -80.4000, name: "Asociación Cacaotera", products: "Cacao, Café", district: "Morropón", type: "farmer" }
     ];
 
-    // ========== FERIAS (naranja) ==========
     var fairs = [
         { lat: -5.0900, lng: -80.1600, name: "Feria de Chulucanas", date: "25 de mayo, 8am-2pm", place: "Plaza Principal", type: "fair" },
         { lat: -4.9200, lng: -80.3400, name: "Feria de Tambogrande", date: "26 de mayo, 9am-3pm", place: "Mercado Central", type: "fair" }
     ];
 
-    // Icono personalizado para agricultores
     var farmerIcon = L.divIcon({
         html: '<i class="fas fa-map-marker-alt fa-2x text-success"></i>',
         iconSize: [25, 25],
         className: 'custom-div-icon'
     });
 
-    // Icono personalizado para ferias
     var fairIcon = L.divIcon({
         html: '<i class="fas fa-map-marker-alt fa-2x text-warning"></i>',
         iconSize: [25, 25],
         className: 'custom-div-icon'
     });
 
-    // Agregar agricultores al mapa
     farmers.forEach(function(farmer) {
         var popupContent = `
             <div style="min-width: 180px;">
@@ -76,7 +70,6 @@
             .addTo(map);
     });
 
-    // Agregar ferias al mapa
     fairs.forEach(function(fair) {
         var popupContent = `
             <div style="min-width: 180px;">

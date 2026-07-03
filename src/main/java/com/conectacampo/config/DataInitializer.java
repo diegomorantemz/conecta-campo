@@ -33,9 +33,6 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("INICIANDO DATA INITIALIZER");
 
-        // ==========================================
-        // 1. Crear usuario ADMINISTRADOR (con contraseña encriptada)
-        // ==========================================
         if (userRepository.count() == 0) {
             log.info("Creando usuario administrador...");
 
@@ -54,9 +51,6 @@ public class DataInitializer implements CommandLineRunner {
             log.info("Administrador creado: admin@conectacampo.pe / admin123");
         }
 
-        // ==========================================
-        // 2. Crear PRODUCTOS
-        // ==========================================
         if (productRepository.count() == 0) {
             log.info("Cargando catálogo de productos...");
 
@@ -73,9 +67,6 @@ public class DataInitializer implements CommandLineRunner {
             log.info("{} productos cargados", productRepository.count());
         }
 
-        // ==========================================
-        // 3. Crear AGRICULTORES de ejemplo (con contraseñas encriptadas)
-        // ==========================================
         if (userRepository.findByRole(Role.FARMER).isEmpty()) {
             log.info("Creando agricultores de ejemplo...");
 
@@ -83,7 +74,7 @@ public class DataInitializer implements CommandLineRunner {
             farmer1.setName("Juan");
             farmer1.setLastname("Pérez");
             farmer1.setEmail("juan@conectacampo.pe");
-            farmer1.setPassword(passwordEncoder.encode("123456"));  // ← ENCRIPTADO
+            farmer1.setPassword(passwordEncoder.encode("123456"));
             farmer1.setRole(Role.FARMER);
             farmer1.setPhone("987654321");
             farmer1.setDni("12345678");
@@ -96,7 +87,7 @@ public class DataInitializer implements CommandLineRunner {
             farmer2.setName("María");
             farmer2.setLastname("Rodríguez");
             farmer2.setEmail("maria@conectacampo.pe");
-            farmer2.setPassword(passwordEncoder.encode("123456"));  // ← ENCRIPTADO
+            farmer2.setPassword(passwordEncoder.encode("123456"));
             farmer2.setRole(Role.FARMER);
             farmer2.setPhone("987123456");
             farmer2.setDni("87654321");
@@ -109,7 +100,7 @@ public class DataInitializer implements CommandLineRunner {
             farmer3.setName("Comunidad");
             farmer3.setLastname("Huancabamba");
             farmer3.setEmail("huancabamba@conectacampo.pe");
-            farmer3.setPassword(passwordEncoder.encode("123456"));  // ← ENCRIPTADO
+            farmer3.setPassword(passwordEncoder.encode("123456"));
             farmer3.setRole(Role.FARMER);
             farmer3.setPhone("973123456");
             farmer3.setDni("11111111");
@@ -121,9 +112,6 @@ public class DataInitializer implements CommandLineRunner {
             log.info("Total agricultores creados: 3");
         }
 
-        // ==========================================
-        // 4. Crear FINCAS para los agricultores
-        // ==========================================
         if (farmRepository.count() == 0) {
             log.info("Creando fincas...");
 
@@ -170,9 +158,6 @@ public class DataInitializer implements CommandLineRunner {
             log.info("{} fincas creadas", farmRepository.count());
         }
 
-        // ==========================================
-        // 5. Crear COSECHAS de ejemplo
-        // ==========================================
         if (harvestRepository.count() == 0) {
             log.info("Creando cosechas de ejemplo...");
 
@@ -262,19 +247,14 @@ public class DataInitializer implements CommandLineRunner {
             log.info("{} cosechas creadas", harvestRepository.count());
         }
 
-        // ==========================================
-        // 6. Cargar ubicaciones de Piura
-        // ==========================================
         if (departmentRepository.count() == 0) {
             log.info("Cargando ubicaciones de Piura...");
 
-            // Crear Departamento de Piura
             Department piura = new Department();
             piura.setName("Piura");
             departmentRepository.save(piura);
             log.info("Departamento creado: Piura");
 
-            // Provincia: Piura
             Province piuraProv = new Province();
             piuraProv.setName("Piura");
             piuraProv.setDepartment(piura);
@@ -291,7 +271,6 @@ public class DataInitializer implements CommandLineRunner {
             }
             log.info("10 distritos de Piura cargados");
 
-            // Provincia: Sullana
             Province sullana = new Province();
             sullana.setName("Sullana");
             sullana.setDepartment(piura);
@@ -308,7 +287,6 @@ public class DataInitializer implements CommandLineRunner {
             }
             log.info("8 distritos de Sullana cargados");
 
-            // Provincia: Morropón
             Province morropon = new Province();
             morropon.setName("Morropón");
             morropon.setDepartment(piura);
@@ -325,7 +303,6 @@ public class DataInitializer implements CommandLineRunner {
             }
             log.info("9 distritos de Morropón cargados");
 
-            // Provincia: Huancabamba
             Province huancabamba = new Province();
             huancabamba.setName("Huancabamba");
             huancabamba.setDepartment(piura);
@@ -342,7 +319,6 @@ public class DataInitializer implements CommandLineRunner {
             }
             log.info("8 distritos de Huancabamba cargados");
 
-            // Provincia: Ayabaca
             Province ayabaca = new Province();
             ayabaca.setName("Ayabaca");
             ayabaca.setDepartment(piura);
@@ -358,7 +334,6 @@ public class DataInitializer implements CommandLineRunner {
             }
             log.info("10 distritos de Ayabaca cargados");
 
-            // Provincia: Talara
             Province talara = new Province();
             talara.setName("Talara");
             talara.setDepartment(piura);
@@ -374,7 +349,6 @@ public class DataInitializer implements CommandLineRunner {
             }
             log.info("6 distritos de Talara cargados");
 
-            // Provincia: Paita
             Province paita = new Province();
             paita.setName("Paita");
             paita.setDepartment(piura);
@@ -390,7 +364,6 @@ public class DataInitializer implements CommandLineRunner {
             }
             log.info("7 distritos de Paita cargados");
 
-            // Provincia: Sechura
             Province sechura = new Province();
             sechura.setName("Sechura");
             sechura.setDepartment(piura);
@@ -412,9 +385,6 @@ public class DataInitializer implements CommandLineRunner {
             log.info("Ubicaciones ya existen en la BD, saltando carga...");
         }
 
-        // ==========================================
-        // 7. Crear FERIAS de ejemplo
-        // ==========================================
         if (fairRepository.count() == 0) {
             log.info("Creando ferias de ejemplo...");
 

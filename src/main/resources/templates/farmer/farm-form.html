@@ -17,42 +17,63 @@
                 <div class="card-body">
 
                     <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
 
-                    <form th:action="@{/farmer/farms/save}" th:object="${farm}" method="post">
+                    <div th:if="${errors}" class="alert alert-danger">
+                        <ul>
+                            <li th:each="error : ${errors}" th:text="${error.defaultMessage}"></li>
+                        </ul>
+                    </div>
+
+                    <form th:action="@{${farm.id != null} ? '/farmer/farms/update/' + ${farm.id} : '/farmer/farms/save'}"
+                          th:object="${farm}" method="post">
+
                         <input type="hidden" th:field="*{id}">
 
                         <div class="mb-3">
                             <label class="form-label">Nombre de la finca *</label>
-                            <input type="text" th:field="*{name}" class="form-control" required>
+                            <input type="text" th:field="*{name}" class="form-control"
+                                   minlength="3" maxlength="100"
+                                   placeholder="Finca El Mango" required>
+                            <small class="text-muted">Mínimo 3 caracteres</small>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Distrito *</label>
-                            <input type="text" th:field="*{district}" class="form-control" required>
+                            <input type="text" th:field="*{district}" class="form-control"
+                                   placeholder="Chulucanas" required>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Latitud</label>
-                                <input type="number" step="any" th:field="*{locationLat}" class="form-control" placeholder="-5.0925">
-                                <small class="text-muted">Ej: -5.0925 (opcional)</small>
+                                <input type="number" step="any" th:field="*{locationLat}" class="form-control"
+                                       placeholder="-5.0925" min="-90" max="90">
+                                <small class="text-muted">Opcional (entre -90 y 90)</small>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Longitud</label>
-                                <input type="number" step="any" th:field="*{locationLng}" class="form-control" placeholder="-80.1625">
-                                <small class="text-muted">Ej: -80.1625 (opcional)</small>
+                                <input type="number" step="any" th:field="*{locationLng}" class="form-control"
+                                       placeholder="-80.1625" min="-180" max="180">
+                                <small class="text-muted">Opcional (entre -180 y 180)</small>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Descripción</label>
-                            <textarea th:field="*{description}" class="form-control" rows="3"
+                            <textarea th:field="*{description}" class="form-control" rows="3" maxlength="500"
                                       placeholder="Describe tu finca, productos que cultivas, etc."></textarea>
+                            <small class="text-muted">Máximo 500 caracteres (opcional)</small>
                         </div>
 
-                        <button type="submit" class="btn btn-success w-100">
-                            <i class="fas fa-save me-2"></i>Guardar Finca
-                        </button>
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="submit" class="btn btn-success flex-grow-1">
+                                <i class="fas fa-save me-2"></i>Guardar Finca
+                            </button>
+                            <a th:href="@{/dashboard/farmer}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-1"></i> Volver
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>

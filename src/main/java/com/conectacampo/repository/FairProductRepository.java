@@ -11,9 +11,7 @@ import java.util.List;
 @Repository
 public interface FairProductRepository extends JpaRepository<FairProduct, Long> {
 
-    // Buscar productos por feria
     List<FairProduct> findByFair(Fair fair);
 
-    // Buscar ferias por producto
     List<FairProduct> findByProduct(Product product);
 }

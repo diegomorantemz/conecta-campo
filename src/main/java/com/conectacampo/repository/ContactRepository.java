@@ -12,15 +12,11 @@ import java.util.List;
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> {
 
-    // Buscar contactos por cosecha
     List<Contact> findByHarvest(Harvest harvest);
 
-    // Buscar contactos por comprador
     List<Contact> findByBuyer(User buyer);
 
-    // Buscar contactos por estado
     List<Contact> findByStatus(ContactStatus status);
 
-    // Buscar contactos por cosecha y estado
     List<Contact> findByHarvestAndStatus(Harvest harvest, ContactStatus status);
 }

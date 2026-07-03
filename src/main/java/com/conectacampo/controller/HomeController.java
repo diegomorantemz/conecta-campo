@@ -42,11 +42,4 @@ public class HomeController {
         return "login";
     }
 
-    /*
-    @GetMapping("/register")
-    public String register(Model model) {
-        model.addAttribute("title", "Registro");
-        model.addAttribute("currentPage", "register");
-        return "register";
-    }*/
 }

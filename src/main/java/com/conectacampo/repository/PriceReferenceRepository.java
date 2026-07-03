@@ -12,15 +12,11 @@ import java.util.Optional;
 @Repository
 public interface PriceReferenceRepository extends JpaRepository<PriceReference, Long> {
 
-    // Buscar por producto
     List<PriceReference> findByProduct(Product product);
 
-    // Buscar por producto y distrito
     Optional<PriceReference> findByProductAndDistrict(Product product, String district);
 
-    // Buscar precios de referencia por fecha
     List<PriceReference> findByReferenceDate(LocalDate date);
 
-    // Buscar últimos precios de referencia por producto
     List<PriceReference> findTopByProductOrderByReferenceDateDesc(Product product);
 }

@@ -24,12 +24,10 @@ public class FairController {
     @GetMapping
     public String listFairs(Model model) {
 
-        // Obtener ferias por estado (manejar null con Collections.emptyList())
         List<Fair> upcomingFairs = fairRepository.findByStatus(FairStatus.UPCOMING);
         List<Fair> activeFairs = fairRepository.findByStatus(FairStatus.ACTIVE);
         List<Fair> finishedFairs = fairRepository.findByStatus(FairStatus.FINISHED);
 
-        // Si la lista es null, usar lista vacía
         model.addAttribute("upcomingFairs", upcomingFairs != null ? upcomingFairs : Collections.emptyList());
         model.addAttribute("activeFairs", activeFairs != null ? activeFairs : Collections.emptyList());
         model.addAttribute("finishedFairs", finishedFairs != null ? finishedFairs : Collections.emptyList());

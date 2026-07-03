@@ -8,7 +8,6 @@
     <h1 class="text-center mb-2">Catálogo de Productos</h1>
     <p class="text-center text-muted mb-4">Productos agrícolas de la región Piura</p>
 
-    <!-- Filtros rápidos -->
     <div class="row mb-4">
         <div class="col-md-4 mx-auto">
             <select id="categoryFilter" class="form-select">
@@ -22,7 +21,6 @@
         </div>
     </div>
 
-    <!-- Listado de productos -->
     <div class="row" id="productsContainer">
         <div th:each="product : ${products}" class="col-md-4 col-lg-3 mb-4" th:data-category="${product.category}">
             <div class="card h-100 shadow-sm">
@@ -35,29 +33,24 @@
                           th:text="${product.category}">
                     </span>
 
-                    <!-- Nombre y variedad -->
                     <h5 class="card-title">
                         <span th:text="${product.name}"></span>
                         <span th:text="${product.variety != null} ? ' ' + ${product.variety} : ''"></span>
                     </h5>
 
-                    <!-- Unidad -->
                     <p class="card-text small text-muted">
                         <i class="fas fa-weight-hanging"></i> Unidad: <span th:text="${product.unit}"></span>
                     </p>
 
-                    <!-- Precio referencia -->
                     <p class="fw-bold text-success">
                         Precio referencia: S/ <span th:text="${product.minPrice}"></span> - S/ <span th:text="${product.maxPrice}"></span>
                     </p>
 
-                    <!-- Temporada -->
                     <p class="small text-muted" th:if="${product.seasonStart != null and product.seasonEnd != null}">
                         <i class="fas fa-calendar-alt"></i> Temporada:
                         <span th:text="${product.seasonStart}"></span> - <span th:text="${product.seasonEnd}"></span>
                     </p>
 
-                    <!-- Botón para ver cosechas -->
                     <a th:href="@{/harvests}" class="btn btn-outline-success btn-sm w-100 mt-2">
                         <i class="fas fa-apple-alt"></i> Ver cosechas disponibles
                     </a>
@@ -66,7 +59,6 @@
         </div>
     </div>
 
-    <!-- Mensaje si no hay productos -->
     <div th:if="${products.isEmpty()}" class="alert alert-info text-center">
         No hay productos disponibles en el catálogo.
     </div>
@@ -75,7 +67,7 @@
 <div th:replace="fragments/footer :: footer"></div>
 
 <script>
-    // Filtro por categoría
+
     document.getElementById('categoryFilter').addEventListener('change', function() {
         const selectedCategory = this.value;
         const products = document.querySelectorAll('#productsContainer > div');

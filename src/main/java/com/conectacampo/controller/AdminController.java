@@ -2,16 +2,18 @@ package com.conectacampo.controller;
 
 import com.conectacampo.model.Product;
 import com.conectacampo.model.User;
+import com.conectacampo.model.enums.Role;
 import com.conectacampo.repository.ProductRepository;
 import com.conectacampo.repository.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -22,15 +24,14 @@ public class AdminController {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    // Dashboard del administrador
     @GetMapping("/dashboard")
     public String adminDashboard(Model model, Authentication authentication) {
         String email = authentication.getName();
         User admin = userRepository.findByEmail(email).orElse(null);
 
         long totalProducts = productRepository.count();
-        long totalFarmers = userRepository.countByRole(com.conectacampo.model.enums.Role.FARMER);
-        long totalBuyers = userRepository.countByRole(com.conectacampo.model.enums.Role.BUYER);
+        long totalFarmers = userRepository.countByRole(Role.FARMER);
+        long totalBuyers = userRepository.countByRole(Role.BUYER);
 
         model.addAttribute("adminName", admin != null ? admin.getName() : "Admin");
         model.addAttribute("totalProducts", totalProducts);
@@ -41,7 +42,6 @@ public class AdminController {
         return "admin/dashboard";
     }
 
-    // CRUD de Productos
     @GetMapping("/products")
     public String listProducts(Model model) {
         List<Product> products = productRepository.findAll();
@@ -53,14 +53,27 @@ public class AdminController {
 
     @GetMapping("/products/create")
     public String createProductForm(Model model) {
-        model.addAttribute("product", new Product());
+        if (!model.containsAttribute("product")) {
+            model.addAttribute("product", new Product());
+        }
         model.addAttribute("title", "Nuevo Producto");
         model.addAttribute("currentPage", "admin-products");
         return "admin/product-form";
     }
 
     @PostMapping("/products/save")
-    public String saveProduct(@ModelAttribute Product product, RedirectAttributes redirectAttributes) {
+    public String saveProduct(@Valid @ModelAttribute("product") Product product,
+                              BindingResult result,
+                              RedirectAttributes redirectAttributes,
+                              Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("errors", result.getAllErrors());
+            model.addAttribute("title", "Nuevo Producto");
+            model.addAttribute("currentPage", "admin-products");
+            return "admin/product-form";
+        }
+
         try {
             productRepository.save(product);
             redirectAttributes.addFlashAttribute("success", "Producto guardado correctamente.");
@@ -81,6 +94,30 @@ public class AdminController {
         model.addAttribute("title", "Editar Producto");
         model.addAttribute("currentPage", "admin-products");
         return "admin/product-form";
+    }
+
+    @PostMapping("/products/update/{id}")
+    public String updateProduct(@PathVariable Long id,
+                                @Valid @ModelAttribute("product") Product product,
+                                BindingResult result,
+                                RedirectAttributes redirectAttributes,
+                                Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("errors", result.getAllErrors());
+            model.addAttribute("title", "Editar Producto");
+            model.addAttribute("currentPage", "admin-products");
+            return "admin/product-form";
+        }
+
+        try {
+            product.setId(id);
+            productRepository.save(product);
+            redirectAttributes.addFlashAttribute("success", "Producto actualizado correctamente.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al actualizar el producto.");
+        }
+        return "redirect:/admin/products";
     }
 
     @GetMapping("/products/delete/{id}")

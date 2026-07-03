@@ -27,15 +27,14 @@ public class DashboardController {
     private final HarvestRepository harvestRepository;
     private final FairRepository fairRepository;
 
-    // Dashboard para agricultor
     @GetMapping("/farmer")
     public String farmerDashboard(Model model, Authentication authentication) {
-        // Obtener el email del usuario autenticado
+
         String email = authentication.getName();
         User farmer = userRepository.findByEmail(email).orElse(null);
 
         if (farmer != null) {
-            // Obtener cosechas del agricultor autenticado
+
             List<Harvest> myHarvests = harvestRepository.findByFarmUserId(farmer.getId());
             long activeHarvests = myHarvests.stream().filter(h -> h.getStatus() == HarvestStatus.ACTIVE).count();
             long totalHarvests = myHarvests.size();
@@ -59,7 +58,6 @@ public class DashboardController {
         return "farmer-dashboard";
     }
 
-    // Dashboard para comprador
     @GetMapping("/buyer")
     public String buyerDashboard(Model model, Authentication authentication) {
         // Obtener el email del usuario autenticado
@@ -71,11 +69,10 @@ public class DashboardController {
             buyerName = buyer.getName() + " " + buyer.getLastname();
         }
 
-        // Estadísticas útiles para un comprador
-        long totalHarvests = harvestRepository.count();           // Total de cosechas disponibles
-        long activeHarvests = harvestRepository.findByStatus(HarvestStatus.ACTIVE).size();  // Cosechas activas
-        long totalFairs = fairRepository.count();                 // Total de ferias
-        long upcomingFairs = fairRepository.findByStatus(FairStatus.UPCOMING).size();  // Ferias próximas
+        long totalHarvests = harvestRepository.count();
+        long activeHarvests = harvestRepository.findByStatus(HarvestStatus.ACTIVE).size();
+        long totalFairs = fairRepository.count();
+        long upcomingFairs = fairRepository.findByStatus(FairStatus.UPCOMING).size();
 
         model.addAttribute("buyerName", buyerName);
         model.addAttribute("totalHarvests", totalHarvests);
